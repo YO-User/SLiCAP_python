@@ -94,9 +94,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction/SLiCAPintroduction.html">SLiCAP introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../userguide/SLiCAPuserguide.html">SLiCAP user guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/SLiCAPnetlistSyntax.html">SLiCAP netlist syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/SLiCAPdevelopment.html">SLiCAP development</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="SLiCAPreference.html">SLiCAP reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPnotebook.html">SLiCAPnotebook.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAP.html">SLiCAP.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPdesignData.html">SLiCAPdesignData.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPinstruction.html">SLiCAPinstruction.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPexecute.html">SLiCAPexecute.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPyacc.html">SLiCAPyacc.py</a></li>
@@ -200,13 +202,14 @@
 <ol class="arabic simple">
 <li>path settings<ul>
 <li>installPath       : Directory with SLiCAP modules files</li>
+<li>userPath          : Directory with SLiCAP libraries and examples</li>
 <li>projectPath       : Directory with SLiCAP project files</li>
 <li>htmlPath          : Directory with SLiCAP HTML output</li>
 <li>circuitPath       : Directory with SLiCAP project circuit files</li>
 <li>libraryPath       : Directory with SLiCAP user libraries</li>
 <li>txtPath           : Directory with text files for HTML output</li>
 <li>csvPath           : Directory with csv files for HTML tables</li>
-<li>latexPath         : Directory with csv files for HTML tables</li>
+<li>sphinxPath        : Directory for sphinx output</li>
 <li>mathmlPath        : Directory for mathML output</li>
 <li>imgPath           : Directory with images for HTML output</li>
 <li>defaultLib        : Directory with SLiCAP basic library files</li>
@@ -631,6 +634,12 @@ rendering of latex in Jupyter notebooks.</li>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="SLiCAP.SLiCAPini.SLiCAPini.settings.sphinxPath">
+<code class="descname">sphinxPath</code><em class="property"> = None</em><a class="headerlink" href="#SLiCAP.SLiCAPini.SLiCAPini.settings.sphinxPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path (<em>str</em>) for saving sphinx files, will be set by <strong>SLiCAP.initProject()</strong>;  defaults to None.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="SLiCAP.SLiCAPini.SLiCAPini.settings.stepFunction">
 <code class="descname">stepFunction</code><em class="property"> = None</em><a class="headerlink" href="#SLiCAP.SLiCAPini.SLiCAPini.settings.stepFunction" title="Permalink to this definition">¶</a></dt>
 <dd><p>(<em>Bool</em>)</p>
@@ -671,6 +680,12 @@ with multiple step variables.</li>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="SLiCAP.SLiCAPini.SLiCAPini.settings.userPath">
+<code class="descname">userPath</code><em class="property"> = None</em><a class="headerlink" href="#SLiCAP.SLiCAPini.SLiCAPini.settings.userPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>User path of SLiCAP (<em>str</em>), defaults to None.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -689,7 +704,7 @@ with multiple step variables.</li>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2022, SLiCAP development team.
+        &#169; Copyright 2023, SLiCAP development team.
 
     </p>
   </div>

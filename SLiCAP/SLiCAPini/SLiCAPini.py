@@ -115,13 +115,14 @@ class settings(object):
     #. path settings
 
        - installPath       : Directory with SLiCAP modules files
+       - userPath          : Directory with SLiCAP libraries and examples
        - projectPath       : Directory with SLiCAP project files
        - htmlPath          : Directory with SLiCAP HTML output
        - circuitPath       : Directory with SLiCAP project circuit files
        - libraryPath       : Directory with SLiCAP user libraries
        - txtPath           : Directory with text files for HTML output
        - csvPath           : Directory with csv files for HTML tables
-       - latexPath         : Directory with csv files for HTML tables
+       - sphinxPath        : Directory for sphinx output
        - mathmlPath        : Directory for mathML output
        - imgPath           : Directory with images for HTML output
        - defaultLib        : Directory with SLiCAP basic library files
@@ -226,9 +227,15 @@ class settings(object):
         """
         Initializes the start-up values of the global parameters.
         """
+        
         self.installPath        = None
         """
         Installation path of SLiCAP (*str*), defaults to None.
+        """
+        
+        self.userPath        = None
+        """
+        User path of SLiCAP (*str*), defaults to None.
         """
         
         self.defaultLib         = None
@@ -274,6 +281,11 @@ class settings(object):
         self.latexPath          = None
         """
         Path (*str*) for saving latex files, will be set by **SLiCAP.initProject()**;  defaults to None.
+        """
+        
+        self.sphinxPath         = None
+        """
+        Path (*str*) for saving sphinx files, will be set by **SLiCAP.initProject()**;  defaults to None.
         """
 
         self.mathmlPath         = None
@@ -571,6 +583,7 @@ class settings(object):
         :type projectPath: str
         """
         self.defaultLib       = LIBCOREPATH
+        self.userPath         = USERPATH
         self.projectPath      = projectPath
         self.htmlPath         = projectPath + HTMLPATH
         self.circuitPath      = projectPath + CIRCUITPATH
@@ -578,6 +591,7 @@ class settings(object):
         self.txtPath          = projectPath + TXTPATH
         self.csvPath          = projectPath + CSVPATH
         self.latexPath        = projectPath + LATEXPATH
+        self.sphinxPath       = projectPath + SPHINXPATH
         self.mathmlPath       = projectPath + MATHMLPATH
         self.imgPath          = projectPath + IMGPATH
         self.maxima           = MAXIMA

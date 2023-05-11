@@ -165,7 +165,7 @@ def coeffsTransfer(rational, variable=ini.Laplace, normalize='lowest'):
     coeffsDenom.reverse()
     return (gain, coeffsNumer, coeffsDenom)
 
-def normalizeRational(rational, variable=ini.Laplace, method='lowest'):
+def normalizeRational(rational, var=ini.Laplace, method='lowest'):
     """
     Normalizes a rational expression to:
 
@@ -191,14 +191,18 @@ def normalizeRational(rational, variable=ini.Laplace, method='lowest'):
     :return:  Normalized rational function of the variable.
     :rtype: sympy.Expr
     """
-    if variable in list(sp.N(rational).atoms(sp.Symbol)):
+    num, den = rational.as_numer_denom()
+    num = sp.collect(sp.expand(num), var)
+    den = sp.collect(sp.expand(den), var)
+    rational = num/den
+    if var in list(sp.N(rational).atoms(sp.Symbol)):
         # Exception will be raised for non positive integer powers of variable.
         # Then, we just pass the rational without normaling it.
         try:
-            gain, coeffsNumer, coeffsDenom = coeffsTransfer(rational, variable, method)
+            gain, coeffsNumer, coeffsDenom = coeffsTransfer(rational, variable=var, normalize=method)
             coeffsNumer.reverse()
             coeffsDenom.reverse()
-            rational = gain*(sp.Poly(coeffsNumer, variable)/sp.Poly(coeffsDenom, variable))
+            rational = gain*(sp.Poly(coeffsNumer, var)/sp.Poly(coeffsDenom, var))
         except BaseException:
             exc_type, value, exc_traceback = sys.exc_info()
             print('\n', value)
@@ -733,7 +737,12 @@ def phaseFunc_f(LaplaceExpr, f):
             func = sp.lambdify(ini.frequency, sp.N(data), ini.lambdifyTool)
             phase = np.angle(func(f))
         except BaseException:
-            phase = [np.angle(sp.N(data.subs(ini.frequency, f[i]))) for i in range(len(f))]
+            phase = []
+            for i in range(len(f)):
+                try:
+                    phase.append(np.angle(sp.N(data.subs(ini.frequency, f[i]))))
+                except BaseException:
+                    phase.append(0)
     elif data >= 0:
         phase = [0 for i in range(len(f))]
     elif data < 0:
@@ -1063,6 +1072,48 @@ def step2PeriodicPulse(ft, t_pulse, t_period, n_periods):
         print("Error: expected a time function f(t).")
     return ft_out
 
+def butterworthPoly(n):
+    """
+    Returns a narmalized Butterworth polynomial of the n-th order of the 
+    Laplace variable.
+    
+    :param n: order
+    :type n: int
+    
+    :return: Butterworth polynomial of the n-th order of the Laplace variable
+    :rtype: sympy.Expression
+    """
+    s = ini.Laplace
+    if n%2:
+        B_s = (s+1)
+        for i in range(int((n-1)/2)):
+            k = i + 1
+            B_s *= (s**2-2*s*sp.cos((2*k+n-1)*sp.pi/2/n)+1)
+    else:
+        B_s = 1
+        for i in range(int(n/2)):
+            k = i + 1
+            B_s *= (s**2-2*s*sp.cos((2*k+n-1)*sp.pi/2/n)+1)
+    B_s = sp.simplify(B_s)
+    return(B_s)
+
+def besselPoly(n):
+    """
+    Returns a normalized Bessel polynomial of the n-th order of the Laplace 
+    variable.
+    
+    :param n: order
+    :type n: int
+    
+    :return: Bessel polynomial of the n-th order of the Laplace variable
+    :rtype: sympy.Expression
+    """
+    s = ini.Laplace
+    B_s = 0
+    for k in range(n+1):
+        B_s += (sp.factorial(2*n-k)/((2**(n-k))*sp.factorial(k)*sp.factorial(n-k)))*s**k
+    B_s = sp.simplify(B_s/B_s.subs(s,0))
+    return(B_s)     
 
 def rmsNoise(noiseResult, noise, fmin, fmax, source = None):
     """
@@ -1166,6 +1217,23 @@ def rmsNoise(noiseResult, noise, fmin, fmax, source = None):
             if len(rms) == 1:
                 rms = rms[0]
             return rms
+        
+def PdBm2V(p, r):
+    """
+    Returns the RMS value of the voltage that generates *p* dBm power
+    in a resistor with resistance *r*.
+    
+    :param p: Power in dBm
+    :type p:  sympy.Symbol, sympy.Expression, int, or float
+    
+    :param r: Resistance
+    :type r:  sympy.Symbol, sympy.Expression, int, or float
+    
+    :return: voltage
+    :rtype: sympy.Expression
+    """
+    voltage = sp.sqrt(r * 0.001*10**(p/10))
+    return voltage
 
 if __name__ == "__main__":
     s = ini.Laplace

@@ -102,7 +102,7 @@ def HTMLfoot(indexFile):
     idx = ini.htmlIndex.split('.')[0]
     html = '\n<div id="footnote">\n'
     html += '<p>Go to <a href="' + ini.htmlIndex + '">' + idx + '</a></p>\n'
-    html += '<p>SLiCAP: Symbolic Linear Circuit Analysis Program, Version 1.5.0 &copy 2009-2022 SLiCAP development team</p>\n'
+    html += '<p>SLiCAP: Symbolic Linear Circuit Analysis Program, Version 1.5.0 &copy 2009-2023 SLiCAP development team</p>\n'
     html += '<p>For documentation, examples, support, updates and courses please visit: <a href="https://analog-electronics.tudelft.nl">analog-electronics.tudelft.nl</a></p>\n'
     html += '<p>Last project update: %s</p>\n'%(ini.lastUpdate.strftime("%Y-%m-%d %H:%M:%S"))
     html += '</div></body></html>'
@@ -416,9 +416,12 @@ def params2html(circuitObject, label = '', caption = ''):
     parNames = [sp.Symbol(names[i]) for i in range(len(names))]
     for par in parNames:
         parName = '$' + sp.latex(par) + '$'
-        symValue = '$' + sp.latex(roundN(circuitObject.parDefs[par])) + '$'
-        numValue = '$' + sp.latex(roundN(fullSubs(circuitObject.parDefs[par], circuitObject.parDefs), numeric=True)) + '$'
-        html += '<tr><td class="left">' + parName +'</td><td class="left">' + symValue + '</td><td class="left">' + numValue + '</td></tr>\n'
+        try:
+            symValue = '$' + sp.latex(roundN(circuitObject.parDefs[par])) + '$'
+            numValue = '$' + sp.latex(roundN(fullSubs(circuitObject.parDefs[par], circuitObject.parDefs), numeric=True)) + '$'
+            html += '<tr><td class="left">' + parName +'</td><td class="left">' + symValue + '</td><td class="left">' + numValue + '</td></tr>\n'
+        except:
+            pass
     html += '</table>\n'
     if len(circuitObject.params) > 0:
         caption = "<caption>Table: Parameters without definition in '%s.</caption>\n"%(circuitObject.title)

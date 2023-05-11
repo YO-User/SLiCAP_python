@@ -15,6 +15,7 @@ SLiCAP comprises the following (sub) modules:
    
    SLiCAPnotebook
    SLiCAP
+   SLiCAPdesignData
    SLiCAPinstruction
    SLiCAPexecute
    SLiCAPyacc
