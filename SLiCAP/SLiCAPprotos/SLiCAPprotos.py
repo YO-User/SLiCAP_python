@@ -34,11 +34,6 @@ class circuit(object):
         Name (*str*) of the netlist file. Defaults to None.
         """
 
-        self.lexer      = None
-        """
-        Tokenized (*ply.lex.lex*) netlist file. Defaults to None.
-        """
-
         self.subCKT     = False
         """
         (*bool*) True if the circuit is a sub circuit. Defaults to False.
@@ -152,6 +147,7 @@ class circuit(object):
         """
         (*list*) with reference designators (*str*) of controlled sources.
         """
+        
         self.varIndex   = {}
         """
         (*dict*) with key-value pairs:
@@ -161,7 +157,7 @@ class circuit(object):
           before elemination of the row anmd column associated with the
           reference node '0'.
         """
-
+        
     def delPar(self, parName):
         """
         Deletes a parameter definition and updates the list
@@ -1237,6 +1233,12 @@ class allResults(object):
         Will be copied from **SLiCAPinstruction.instruction** at the start of 
         the execution of the instruction. This instance will be e deep copy.
         """
+        
+    def depVars(self):
+        """
+        Returns the list of detecors available AFTER execution of an instruction.
+        """
+        return [str(var) for var in self.Dv]
 
 def makeDir(dirName):
     """

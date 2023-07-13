@@ -1,13 +1,13 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Noise tutorials &mdash; SLiCAP 1.5.0 documentation</title>
+  <title>Noise tutorials &mdash; SLiCAP 1.6.0 documentation</title>
   
 
   
@@ -30,17 +30,18 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Jupyter notebooks" href="jupyter.html" /> 
+    <link rel="next" title="Plotting of SLiCAP MOS EKV characteristics" href="MOS-EKV.html" />
+    <link rel="prev" title="Tutorial My First RC network" href="myFirstRCnetwork.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -64,7 +65,7 @@
             
             
               <div class="version">
-                1.5.0
+                1.6.0
               </div>
             
           
@@ -96,9 +97,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../development/SLiCAPdevelopment.html">SLiCAP development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/SLiCAPreference.html">SLiCAP reference</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="SLiCAPtutorials.html">SLiCAP tutorials</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="LTspice.html">SLiCAP LTspice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jupyter.html">Jupyter notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LTspice.html">SLiCAP schematic capture with LTspice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myFirstRCnetwork.html">Tutorial My First RC network</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Noise tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MOS-EKV.html">Plotting of SLiCAP MOS EKV characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="balanced.html">Tutorial Balanced Circuits</a></li>
 </ul>
 </li>
 </ul>
@@ -171,13 +174,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="noise-tutorials">
-<h1>Noise tutorials<a class="headerlink" href="#noise-tutorials" title="Permalink to this headline">¶</a></h1>
+<h1>Noise tutorials<a class="headerlink" href="#noise-tutorials" title="Permalink to this heading">¶</a></h1>
 <ol class="arabic">
-<li><p class="first">Determination of noise figures <a class="reference external" href="../../examples/noiseFigure/noiseFigure.zip">noiseFigure.zip</a></p>
+<li><p>Determination of noise figures <a class="reference external" href="../../examples/noiseFigure/noiseFigure.zip">noiseFigure.zip</a></p>
 <p>The project file <em>‘noiseFigures.py’</em> executes two python scripts:</p>
 <ul class="simple">
-<li>noiseFigureRp.py: Symbolic calculation of a noise figure of a resistive source terminated with a resistor with flicker noise.</li>
-<li>noiseFigureAmp.py: Symbolic calculation of a noise figure of an amplifier with equivalent input noise sources connected to a resistive source.</li>
+<li><p>noiseFigureRp.py: Symbolic calculation of a noise figure of a resistive source terminated with a resistor with flicker noise.</p></li>
+<li><p>noiseFigureAmp.py: Symbolic calculation of a noise figure of an amplifier with equivalent input noise sources connected to a resistive source.</p></li>
 </ul>
 </li>
 </ol>
@@ -189,7 +192,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="jupyter.html" class="btn btn-neutral float-left" title="Jupyter notebooks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MOS-EKV.html" class="btn btn-neutral float-right" title="Plotting of SLiCAP MOS EKV characteristics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="myFirstRCnetwork.html" class="btn btn-neutral float-left" title="Tutorial My First RC network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

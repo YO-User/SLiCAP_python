@@ -1,13 +1,13 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SLiCAP tutorials &mdash; SLiCAP 1.5.0 documentation</title>
+  <title>SLiCAP tutorials &mdash; SLiCAP 1.6.0 documentation</title>
   
 
   
@@ -30,17 +30,17 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="SLiCAP LTspice" href="LTspice.html" />
+    <link rel="next" title="SLiCAP schematic capture with LTspice" href="LTspice.html" />
     <link rel="prev" title="SLiCAPconfig.py" href="../reference/SLiCAPconfig.html" /> 
 </head>
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.5.0
+                1.6.0
               </div>
             
           
@@ -97,9 +97,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../development/SLiCAPdevelopment.html">SLiCAP development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/SLiCAPreference.html">SLiCAP reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SLiCAP tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="LTspice.html">SLiCAP LTspice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jupyter.html">Jupyter notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LTspice.html">SLiCAP schematic capture with LTspice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myFirstRCnetwork.html">Tutorial My First RC network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="noise.html">Noise tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MOS-EKV.html">Plotting of SLiCAP MOS EKV characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="balanced.html">Tutorial Balanced Circuits</a></li>
 </ul>
 </li>
 </ul>
@@ -170,12 +172,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="slicap-tutorials">
-<h1>SLiCAP tutorials<a class="headerlink" href="#slicap-tutorials" title="Permalink to this headline">¶</a></h1>
+<h1>SLiCAP tutorials<a class="headerlink" href="#slicap-tutorials" title="Permalink to this heading">¶</a></h1>
 <a class="reference external image-reference" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" style="width: 88px;" /></a>
 <p>SLiCAP is licensed under a <a class="reference external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>. Based on a work at: <a class="reference external" href="https://analog-electronics.tudelft.nl/slicap/slicap.html">https://analog-electronics.tudelft.nl/slicap/slicap.html</a></p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="LTspice.html">SLiCAP LTspice</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="LTspice.html">SLiCAP schematic capture with LTspice</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="LTspice.html#install-and-configure-ltspice-for-schematic-capture">Install and configure LTspice for schematic capture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="LTspice.html#draw-the-circuit-in-ltspice">Draw the circuit in LTspice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="LTspice.html#create-a-slicap-netlist-from-an-ltspice-schematic-file">Create a SLiCAP netlist from an LTspice schematic file</a><ul>
@@ -185,11 +187,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter notebooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jupyter.html#slicap-tutorials-written-in-jupyter-lab">SLiCAP tutorials written in Jupyter lab</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="myFirstRCnetwork.html">Tutorial My First RC network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="noise.html">Noise tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MOS-EKV.html">Plotting of SLiCAP MOS EKV characteristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="balanced.html">Tutorial Balanced Circuits</a></li>
 </ul>
 </div>
 </div>
@@ -200,7 +201,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="LTspice.html" class="btn btn-neutral float-right" title="SLiCAP LTspice" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="LTspice.html" class="btn btn-neutral float-right" title="SLiCAP schematic capture with LTspice" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="../reference/SLiCAPconfig.html" class="btn btn-neutral float-left" title="SLiCAPconfig.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

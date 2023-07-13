@@ -34,6 +34,7 @@ i1.setGainType('vi')
 i1.setDataType('matrix')
 # We execute the instruction and assign the result to a variable 'MNA'
 MNA = i1.execute();
+
 # We will put the instruction on a new HTML page and display it in this notebook
 htmlPage('Matrix equations')
 # Let us put some explaining text in the report:

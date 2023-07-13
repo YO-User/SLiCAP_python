@@ -20,7 +20,7 @@ SCALEFACTORS    =  {'y':'-24','z':'-21','a':'-18','f':'-15','p':'-12','n':'-9',
 def t_PARDEF(t):
     r"""[a-zA-Z]\w*\s*\=\s*({[\w\(\)\/*+-\^ .]*}
     |([+-]?\d+\.?\d*[eE][+-]?\d+)
-    |([+-]?\d+\.?\d*[yzafpnumkMGTPEZY])
+    |([+-]?\d+\.?\d*[yzafpnumkMGTP])
     |([+-]?\d+\.\d*)
     |([+-]?\d+))"""
     # remove whitespace characters
@@ -32,7 +32,7 @@ def t_PARDEF(t):
         # Do this for an expression
         pos = 1
         out = ''
-        for m in re.finditer(r'\d+\.?\d*[yzafpnumkMGTPEZY]', t.value[1]):
+        for m in re.finditer(r'\d+\.?\d*[yzafpnumkMGTP]', t.value[1]):
             out += t.value[1][pos: m.end()-1] + 'E'
             out += SCALEFACTORS[m.group(0)[-1]]
             pos = m.end()
@@ -105,7 +105,7 @@ def t_EXPR(t):
     """
     pos = 1
     out = ''
-    for m in re.finditer(r'\d+\.?\d*([yzafpnumkMGTPEZY])', t.value):
+    for m in re.finditer(r'\d+\.?\d*([yzafpnumkMGTP])', t.value):
         out += t.value[pos: m.end()-1] + 'E' + SCALEFACTORS[m.group(0)[-1]]
         pos = m.end()
     out += t.value[pos:-1]
@@ -146,7 +146,7 @@ t_ignore  = ' \t'
 
 # Define a rule for numbers with scale factors (postfixes)
 def t_SCALE(t):
-    r'[+-]?\d+\.?\d*[yzafpnumkMGTPEZY]'
+    r'[+-]?\d+\.?\d*[yzafpnumkMGTP]'
     """
     Replaces scale factors in numbers and converts numbers into floats
     """
@@ -210,7 +210,7 @@ def replaceScaleFactors(txt):
     """
     pos = 0
     out = ''
-    for m in re.finditer(r'\d+\.?\d*([yzafpnumkMGTPEZY])', txt):
+    for m in re.finditer(r'\d+\.?\d*([yzafpnumkMGTP])', txt):
         out += txt[pos: m.end()-1] + 'E' + SCALEFACTORS[m.group(0)[-1]]
         pos = m.end()
     out += txt[pos:]
