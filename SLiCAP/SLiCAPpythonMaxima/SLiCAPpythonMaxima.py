@@ -230,13 +230,13 @@ def python2maxima(expr):
     :return: maxima expression
     :rtype: str
     """
-    expr = str(expr) + ' ' # Add a space for expressions ending with pi, e, E or I
+    expr = ' ' + str(expr) + ' ' # Add a space for expressions ending with pi, e, E or I
     # Remove extra brackets in matrix
     expr = re.sub(r'Matrix\(\[\[(.*)\]\]\)', r'matrix([\1])', expr)
     # Replace exp(1): e or E with %e
-    expr = re.sub(r'([+-/\*^\(])[eE]([\s\)+-/\*^])', r'\1%e\2', expr)
+    expr = re.sub(r'([+-/\*^\(\s])[eE]([\s\)+-/\*^])', r'\1%e\2', expr)
     # Replace pi with %pi
-    expr = re.sub(r'([+-/\*^\(])pi([\s\)+-/\*^])', r'\1%pi\2', expr)
+    expr = re.sub(r'([+-/\*^\(\s])pi([\s\)+-/\*^])', r'\1%pi\2', expr)
     # Replace 1j or I with %i
     expr = re.sub(r'([0-9])j', r'\1*%i', expr)
     expr = re.sub(r'([+-/\*^\(\s])I([\s\)+-/\*^])', r'\1%i\2', expr)
@@ -292,6 +292,8 @@ def maxima2python(expr):
     expr = re.sub(r'%pi','pi', expr)
     # Convert Maxima matrix to sympy matrix:
     expr = re.sub(r'matrix\(\[(.*)\]\)', r'Matrix([[\1]])', expr)
+    # Convert Maxima dot product notation:
+    expr = re.sub(r' \. ',' * ', expr)
     new_expr = signum2sign(expr)
     while new_expr != expr:
         expr = new_expr
@@ -355,7 +357,7 @@ def checkMaxima():
     result = ini.maximaHandler.maxEval('stringdisp:true$string(1-1);')
     try:
         if result == '0':
-            result = ini.maximaHandler.maxEval('load("' + ini.installPath + 'SLiCAPpythonMaxima/SLiCAP_python.mac")$M:matrix([a,b],[c,d])$string(det(M));')
+            result = ini.maximaHandler.maxEval('load("' + ini.installPath + 'SLiCAPpythonMaxima/SLiCAP_python.mac")$M_:matrix([a,b],[c,d])$string(det(M_));kill(M_);')
             if result == 'a*d-b*c':
                 print("Maxima CAS client is active and functions have been uploaded.")
             else:
@@ -371,15 +373,14 @@ def checkMaxima():
         ini.socket = False
 
 if __name__ == '__main__':
+
     ini.socket = True
     startMaxima()
     # ini.socket should not need to be global, classes are nice
     def test():
         x = sp.Symbol('x')
         y = (1+2*x+3*x**2)/(x*sp.exp(10)+2/sp.pi)
-        for i in range(100):
-            #print(maxIntegrate(y, x, numeric=False))
-            maxIntegrate(y, x, numeric=False)
+        maxIntegrate(y, x, numeric=False)
 
     #import cProfile
     #cProfile.run("test()")
@@ -399,3 +400,10 @@ if __name__ == '__main__':
     ini.maximaHandler.__del__()
     sleep(3)
     print("Nice")
+
+    print(python2maxima(sp.sympify("pi-4")))
+    print(python2maxima(sp.sympify("pi+4")))
+    print(python2maxima(sp.sympify("cos(x)*sqrt(pi/4)")))
+    print(python2maxima(sp.sympify("4/pi")))
+    print(python2maxima(sp.sympify("4*pi")))
+    print(python2maxima(sp.sympify("5.97393228629283e-22*(1 + 12852.1571736679*pi^2*(0.0162278274095267*sqrt(pi)*sqrt(0.000427616435462199*pi + 1)))")))

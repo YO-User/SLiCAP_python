@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SLiCAPinstruction.py &mdash; SLiCAP 1.6.0 documentation</title>
+  <title>SLiCAPinstruction.py &mdash; SLiCAP 1.8.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.8.0
               </div>
             
           
@@ -98,6 +98,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="SLiCAPreference.html">SLiCAP reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPnotebook.html">SLiCAPnotebook.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPlatex.html">SLiCAPlatex.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPkicad.html">SLiCAPkicad.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPrst.html">SLiCAPrst.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAP.html">SLiCAP.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPdesignData.html">SLiCAPdesignData.py</a></li>
@@ -108,6 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPplots.html">SLiCAPplots.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPpythonMaxima.html">SLiCAPpythonMaxima.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPmatrices.html">SLiCAPmatrices.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPngspice.html">SLiCAPngspice.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPprotos.html">SLiCAPprotos.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPmath.html">SLiCAPmath.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPlex.html">SLiCAPlex.py</a></li>
@@ -646,7 +648,7 @@ results of the instruction.</p>
 <dt class="sig sig-object py" id="SLiCAP.SLiCAPinstruction.SLiCAPinstruction.instruction.getElementValue">
 <span class="sig-name descname"><span class="pre">getElementValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elementID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'value'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SLiCAP.SLiCAPinstruction.SLiCAPinstruction.instruction.getElementValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value or expression of one or more circuit elements.</p>
-<p>If instruction.numeric == True it will perform a full recursive 
+<p>If instruction.numeric == True it will perform a full recursive
 substitution of all circuit parameter definitions.</p>
 <p>This method calls instruction.circuit.getElementValue() with
 numeric = True if instruction.simType is set to ‘numeric’.</p>
@@ -667,8 +669,8 @@ numeric = True if instruction.simType is set to ‘numeric’.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>if type(param) == list:</p>
-<p>return value = dict with key-value pairs: key (<em>sympy.Symbol</em>): 
-name of the parameter, value (<em>int, float, sympy expression</em>): 
+<p>return value = dict with key-value pairs: key (<em>sympy.Symbol</em>):
+name of the parameter, value (<em>int, float, sympy expression</em>):
 value of the parameter</p>
 <p>else:
 value or expression</p>
@@ -681,7 +683,7 @@ value or expression</p>
 <dd class="field-even"><p></p></dd>
 </dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an instance if a SLiCAP instruction</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_instr</span> <span class="o">=</span> <span class="n">instruction</span><span class="p">()</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_instr</span> <span class="o">=</span> <span class="n">instruction</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create my_instr.circuit from the netlist &#39;myFirstRCnetwork.cir&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_instr</span><span class="o">.</span><span class="n">setCircuit</span><span class="p">(</span><span class="s1">&#39;myFirstRCnetwork.cir&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Obtain the numeric value of &#39;R1&#39; and &#39;C1&#39;:</span>
@@ -764,7 +766,7 @@ value or expression</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="SLiCAP.SLiCAPinstruction.SLiCAPinstruction.instruction.lgRef">
 <span class="sig-name descname"><span class="pre">lgRef</span></span><a class="headerlink" href="#SLiCAP.SLiCAPinstruction.SLiCAPinstruction.instruction.lgRef" title="Permalink to this definition">¶</a></dt>
-<dd><p>Refdes of the controlled source(s) that is (are) assigned as loop gain 
+<dd><p>Refdes of the controlled source(s) that is (are) assigned as loop gain
 reference. A second controlled source is required for decomposition
 of circuits in common-mode and differential-mode equivalents.</p>
 <p>See <strong>instruction.setLGref(&lt;detector&gt;)</strong> for specification of the loop
@@ -774,7 +776,7 @@ gain reference.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="SLiCAP.SLiCAPinstruction.SLiCAPinstruction.instruction.lgValue">
 <span class="sig-name descname"><span class="pre">lgValue</span></span><a class="headerlink" href="#SLiCAP.SLiCAPinstruction.SLiCAPinstruction.instruction.lgValue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Value of the loopgain reference will be stored during execution of the 
+<dd><p>Value of the loopgain reference will be stored during execution of the
 instruction.</p>
 </dd></dl>
 
@@ -986,7 +988,7 @@ method <strong>instruction.controlled()</strong>.</p>
 <dd><p>Defines the paired subcircuits for matrix conversion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>varPairs</strong> (<em>tuple</em>) – list with tuples of names (str) of subcircuits 
+<dd class="field-odd"><p><strong>varPairs</strong> (<em>tuple</em>) – list with tuples of names (str) of subcircuits
 that must be considered pairs.</p>
 </dd>
 </dl>
@@ -1517,7 +1519,7 @@ will be performed with this matrix conversion.</p>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2023, SLiCAP development team.
+        &#169; Copyright 2024, SLiCAP development team.
 
     </p>
   </div>

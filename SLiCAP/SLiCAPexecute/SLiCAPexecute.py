@@ -347,8 +347,8 @@ def doLoopGainServo(instr, result):
 
     num, den = doMaxLoopGainServo(instr, result)
     if instr.numeric:
-        num = sp.N(num)
-        den = sp.N(den)
+        num = sp.N(fullSubs(num, instr.parDefs))
+        den = sp.N(fullSubs(den, instr.parDefs))
     result.denom.append(den)
     result.numer.append(num)
     result.laplace.append(num/den)
@@ -371,19 +371,27 @@ def doMaxLoopGainServo(instr, result):
     makeMaxMatrices(instr, result)
     Matrix_ = python2maxima(result.M)
     if instr.lgValue[0] != None:
-        if instr.numeric:
-            lg1 = fullSubs(instr.lgValue[0], instr.parDefs)
-        else:
-            lg1 = instr.lgValue[0]
+        lg1 = instr.lgValue[0]
     else:
-        lg1 = None
+        lg1 = sp.N(0)
     if instr.lgValue[1] != None:
-        if instr.numeric:
-            lg2 = fullSubs(instr.lgValue[1], instr.parDefs)
-        else:
-            lg2 = instr.lgValue[1]
+        lg2 = instr.lgValue[1]
     else:
-        lg2 = None
+        lg2 = sp.N(0)
+    if instr.convType !=None and instr.removePairSubName:
+        lenExt  = len(instr.pairExt[0])
+        params = list(set(list(lg1.atoms(sp.Symbol)) + list(lg2.atoms(sp.Symbol))))
+        substDict = {}
+        for param in params:
+            parName = str(param)
+            if len(parName) > lenExt:
+                if parName[-lenExt:] in instr.pairExt:
+                    substDict[param] = sp.Symbol(parName[:-lenExt])
+        lg1 = lg1.subs(substDict)
+        lg2 = lg2.subs(substDict)
+    if instr.numeric:
+        lg1 = fullSubs(lg1, instr.parDefs)
+        lg2 = fullSubs(lg2, instr.parDefs)
     if instr.gainType == 'loopgain':
         maxResult = doMaxFunction('doLoopGain', [Matrix_, lg1, lg2])
         numer, denom = sp.fraction(maxResult)
@@ -603,7 +611,6 @@ def doDCvar(instr, result):
     :param result: **allResults()** object that holds instruction results
     :type result: :class:`allResult()`
     """
-    delDCvarSources(instr)
     if instr.step:
         print("Warning: parameter stepping not (yet) tested for 'dcvar' analysis!")
         if ini.stepFunction:
@@ -628,7 +635,6 @@ def doDCvar(instr, result):
             for i in range(numSteps):
                 for j in range(len(stepVars)):
                     instr.parDefs[stepVars[j]]=instr.stepDict[stepVars[j]][i]
-                delDCvarSources(instr)
                 instr.dataType = 'dcsolve'
                 result.dataType = 'dcsolve'
                 result.dcSolve = doMaxInstr(instr, result).dcSolve[i]
@@ -710,39 +716,74 @@ def addDCvarSources(instr, dcSolution):
     :return: updated instruction object
     :rtype: :class`SLiCAPinstruction.instruction`
     """
-    for el in list(instr.circuit.elements.keys()):
-        if 'dcvar' in list(instr.circuit.elements[el].params.keys()):
-            DCcurrent = 0
+    newElements = {}
+    for el in instr.circuit.elements.keys():
+        if instr.circuit.elements[el].model.upper() == 'R' and instr.circuit.elements[el].params['value'] != 0:
+            lotparnames = []
             refDes = instr.circuit.elements[el].refDes
-            if instr.circuit.elements[el].model == 'r':
-                pos = instr.depVars().index('I_' + refDes)
-                DCcurrent = dcSolution[pos]
-            elif instr.circuit.elements[el].model == 'R':
-                nodeP, nodeN = instr.circuit.elements[el].nodes
-                if nodeP != '0':
-                    posP = instr.depVars().index('V_' + nodeP)
-                    Vpos = dcSolution[posP]
-                else:
-                    Vpos = 0
-                if nodeN != '0':
-                    posN = instr.depVars().index('V_' + nodeN)
-                    Vneg = dcSolution[posN]
-                else:
-                    Vneg = 0
-                DCcurrent = (Vpos - Vneg)/instr.circuit.elements[el].params['value']
-            if DCcurrent != 0:
-                errorCurrentVariance = instr.circuit.elements[refDes].params['dcvar']/instr.circuit.elements[refDes].params['value']**2 * DCcurrent**2
-                newCurrentSource = element()
-                newCurrentSource.refDes          = 'I_dcvar_' + refDes
-                newCurrentSource.params['dcvar'] = sp.simplify(errorCurrentVariance)
-                newCurrentSource.params['noise'] = 0
-                newCurrentSource.params['dc']    = 0
-                newCurrentSource.params['value'] = 0
-                newCurrentSource.model           = 'I'
-                newCurrentSource.type            = 'I'
-                newCurrentSource.nodes           = instr.circuit.elements[refDes].nodes
-                instr.circuit.elements[newCurrentSource.refDes] = newCurrentSource
-                instr.circuit.indepVars.append(newCurrentSource.refDes)
+            if 'dcvar' in instr.circuit.elements[el].params.keys():
+                DCcurrent = 0
+                if instr.circuit.elements[el].model == 'r':
+                    pos = instr.depVars().index('I_' + refDes)
+                    DCcurrent = dcSolution[pos]
+                elif instr.circuit.elements[el].model == 'R':
+                    nodeP, nodeN = instr.circuit.elements[el].nodes
+                    if nodeP != '0':
+                        posP = instr.depVars().index('V_' + nodeP)
+                        Vpos = dcSolution[posP]
+                    else:
+                        Vpos = 0
+                    if nodeN != '0':
+                        posN = instr.depVars().index('V_' + nodeN)
+                        Vneg = dcSolution[posN]
+                    else:
+                        Vneg = 0
+                    DCcurrent = sp.simplify((Vpos - Vneg)/instr.circuit.elements[el].params['value'])
+                if DCcurrent != 0:
+                    errorCurrentVariance = instr.circuit.elements[el].params['dcvar'] * DCcurrent**2
+                    newCurrentSource = element()
+                    newCurrentSource.refDes          = 'I_dcvar_' + refDes
+                    newCurrentSource.params['dcvar'] = errorCurrentVariance
+                    newCurrentSource.params['noise'] = 0
+                    newCurrentSource.params['dc']    = 0
+                    newCurrentSource.params['value'] = 0
+                    newCurrentSource.model           = 'I'
+                    newCurrentSource.type            = 'I'
+                    newCurrentSource.nodes           = instr.circuit.elements[refDes].nodes
+                    newElements[newCurrentSource.refDes] = newCurrentSource
+                    instr.circuit.indepVars.append(newCurrentSource.refDes)
+                    if 'dcvarlot' in list(instr.circuit.elements[el].params.keys()):
+                        lotparname = instr.circuit.elements[el].params['dcvarlot']
+                        if lotparname:
+                            if lotparname in instr.circuit.parDefs.keys():
+                                if lotparname not in lotparnames:
+                                    lotparnames.append(lotparname)
+                                    newVoltageSource = element()
+                                    newVoltageSource.refDes          = 'V_dcvar_' + str(lotparname)
+                                    newVoltageSource.params['dcvar'] = instr.circuit.parDefs[lotparname]
+                                    newVoltageSource.params['noise'] = 0
+                                    newVoltageSource.params['dc']    = 0
+                                    newVoltageSource.params['value'] = 0
+                                    newVoltageSource.model           = 'V'
+                                    newVoltageSource.type            = 'V'
+                                    newVoltageSource.nodes           = [str(lotparname), '0']
+                                    newElements[newVoltageSource.refDes] = newVoltageSource
+                                    instr.circuit.indepVars.append(newVoltageSource.refDes)
+                                newVCCS = element()
+                                newVCCS.model = 'g'
+                                newVCCS.type  = 'G'
+                                newVCCS.refDes = 'G_dcvar_' + refDes
+                                newVCCS.nodes = instr.circuit.elements[el].nodes + newVoltageSource.nodes
+                                newVCCS.params['value'] = DCcurrent
+                                newElements[newVCCS.refDes] = newVCCS
+                            else:
+                                print("Error: unknown lot parameter:", str(lotparname))
+    for el in newElements.keys():
+        if el not in instr.circuit.elements.keys():
+            instr.circuit.elements[el] = newElements[el]
+        else:
+            print("Error: name already used:", el)
+    instr.circuit = updateCirData(instr.circuit)
     return instr
 
 def delDCvarSources(instr):
@@ -757,15 +798,15 @@ def delDCvarSources(instr):
     :rtype: :class`SLiCAPinstruction.instruction`
     """
     names = []
-    for i in range(len(instr.circuit.indepVars)):
-        refDes = instr.circuit.indepVars[i]
+    prefixes = ['I_dcvar_', 'G_dcvar_', 'V_dcvar_']
+    for refDes in instr.circuit.elements.keys():
         if len(refDes) > 8:
             prefix = refDes[0:8]
-            if prefix == 'I_dcvar_':
-                del instr.circuit.elements[refDes]
+            if prefix in prefixes:
                 names.append(refDes)
     for name in names:
-        instr.circuit.indepVars.remove(name)
+        del instr.circuit.elements[name]
+    instr.circuit = updateCirData(instr.circuit)
     return instr
 
 def addResNoiseSources(instr):
@@ -1176,7 +1217,7 @@ def makeMaxInstr(instr, result):
         detP, detN = makeMaxDetPos(instr, result)
         maxInstr = 'Matrix_: ' + python2maxima(result.M.subs(ini.Laplace, 0)) + '$'
         maxInstr += 'Iv_: ' + python2maxima(result.Iv.subs(ini.Laplace, 0).transpose()) + '$'
-        maxInstr += 'detCol_:[' + str(detP) + ',' + str(detN) + ']$'
+        maxInstr += 'detCols_:[' + str(detP) + ',' + str(detN) + ']$'
         maxInstr += maxString('doLaplace(Matrix_,detCols_,Iv_)', instr.numeric)
     elif instr.dataType == 'noise':
         result = makeMaxMatrices(instr, result)
@@ -1193,9 +1234,9 @@ def makeMaxInstr(instr, result):
             if 'noise' in list(instr.circuit.elements[name].params.keys()):
                 value = instr.circuit.elements[name].params['noise']
                 if instr.numeric == True:
-                    value = fullSubs(value, instr.parDefs)
+                    value = sp.N(fullSubs(value, instr.parDefs))
                 result.snoiseTerms[name] = value
-                maxInstr += name + '=' + str(value) + ','
+                maxInstr += name + '=' + python2maxima(value) + ','
         if maxInstr[-1] == ',':
             maxInstr = maxInstr[0:-1]
         maxInstr += ']$'
@@ -1203,7 +1244,7 @@ def makeMaxInstr(instr, result):
     elif instr.dataType == 'dcvar':
         result = makeMaxMatrices(instr, result)
         detP, detN = makeMaxDetPos(instr, result)
-        maxInstr = 'Matrix_' + python2maxima(result.M) + '$'
+        maxInstr = 'Matrix_:' + python2maxima(result.M) + '$'
         maxInstr += 'detCols_:[' + str(detP) + ',' + str(detN) + ']$'
         if instr.source != [None, None] and result.numer[0] !=0:
             maxInstr += 'numer_:' + python2maxima(result.numer[0]) + '$'
@@ -1216,8 +1257,8 @@ def makeMaxInstr(instr, result):
                 value = instr.circuit.elements[name].params['dcvar']
                 result.svarTerms[name] = value
                 if instr.numeric == True:
-                    value = fullSubs(value, instr.parDefs)
-                maxInstr += name + '=' + str(value) + ','
+                    value = sp.N(fullSubs(value, instr.parDefs))
+                maxInstr += name + '=' + python2maxima(value) + ','
         if maxInstr[-1] == ',':
             maxInstr = maxInstr[0:-1]
         maxInstr += ']$'
@@ -1517,39 +1558,6 @@ def stepFunctions(stepDict, function):
 # Functions for converting the MNA matrix anf the vecors with independent and
 # dependent variables into equivalent common-mode and differential-mode variables.
 
-def findBaseNames(instr):
-    """
-    Returns a list with base names of paired elements. The base name is the
-    element identifier without the pairing extension.
-
-    :param instr: instruction with circuit and pairing extensions
-    :type instr: SLiCAPinstruction.instruction()
-
-    :return: base IDs
-    :rtype: list
-    """
-    lenExt = len(instr.pairExt[0])
-    pairedElements = {}
-    baseIDs = []
-    for refDes in list(instr.circuit.elements.keys()):
-        if len(refDes) > lenExt:
-            if refDes[-lenExt:] == instr.pairExt[0]:
-                if refDes[:-lenExt] not in list(pairedElements.keys()):
-                    pairedElements[refDes[:-lenExt]] = [instr.pairExt[0]]
-                elif pairedElements[refDes[:-lenExt]][0] == instr.pairExt[1]:
-                    pairedElements[refDes[:-lenExt]].append(instr.pairExt[0])
-            if refDes[-lenExt:] == instr.pairExt[1]:
-                if refDes[:-lenExt] not in list(pairedElements.keys()):
-                    pairedElements[refDes[:-lenExt]] = [instr.pairExt[1]]
-                elif pairedElements[refDes[:-lenExt]][0] == instr.pairExt[0]:
-                    pairedElements[refDes[:-lenExt]].append(instr.pairExt[1])
-    for key in list(pairedElements.keys()):
-        if len(pairedElements[key]) == 2:
-            baseID = key.split('_')[-1]
-            if baseID not in baseIDs:
-                baseIDs.append(baseID)
-    return baseIDs
-
 def pairParDefs(instr):
     """
     Removes the pair extension from paired parameters in both keys and values in
@@ -1561,31 +1569,31 @@ def pairParDefs(instr):
     :return: instr
     :rtupe: SLiCAPinstruction.instruction()
     """
-    baseIDs = findBaseNames(instr)
     lenExt  = len(instr.pairExt[0])
     substDict = {}
     newParDefs = {}
     # remove subcircuit extension of paired circuits from parameter names
     for key in list(instr.parDefs.keys()):
         parName = str(key)
-        nameParts = parName.split('_')
-        if len(nameParts[-1]) > lenExt and nameParts[-1][-lenExt:] in instr.pairExt and nameParts[-1][:-lenExt] in baseIDs:
+        if len(parName) > lenExt and parName[-lenExt:] in instr.pairExt:
             value = instr.parDefs[key]
-            newParDefs[sp.Symbol(parName[:-lenExt])] = value
             params = list(value.atoms(sp.Symbol))
             # remove subcircuit extension of paired circuits from parameters in expressions
+            valueSubs = {}
             for param in params:
-                parName = str(param)
-                nameParts = parName.split('_')
-                if len(nameParts[-1]) > lenExt:
-                    if nameParts[-1][-lenExt:] in instr.pairExt and nameParts[-1][:-lenExt] in baseIDs:
-                        substDict[param] = sp.Symbol(parName[:-lenExt])
+                newName = str(param)
+                if len(newName) > lenExt:
+                    if newName[-lenExt:] in instr.pairExt:
+                        valueSubs[param] = sp.Symbol(newName[:-lenExt])
+            value = value.subs(valueSubs)
+            newParDefs[sp.Symbol(parName[:-lenExt])] = value
+
         else:
             newParDefs[key] = instr.parDefs[key]
     # perform substitutions
     for param in list(newParDefs.keys()):
         # In parameter names
-        newParDefs[param].subs(substDict)
+        newParDefs[param] = newParDefs[param].subs(substDict)
     instr.parDefs = newParDefs
     return instr
 
@@ -1614,19 +1622,15 @@ def convertMatrices(instr, result):
     """
     pairs, unPaired, dmVars, cmVars, A = createConversionMatrices(instr)
     if instr.removePairSubName:
-        baseIDs = findBaseNames(instr)
         lenExt  = len(instr.pairExt[0])
         params = list(set(list(result.M.atoms(sp.Symbol)) + list(result.Iv.atoms(sp.Symbol))))
         substDict = {}
         for param in params:
             parName = str(param)
-            nameParts = parName.split('_')
-            if len(nameParts[-1]) > lenExt:
-                if nameParts[-1][-lenExt:] in instr.pairExt and nameParts[-1][:-lenExt] in baseIDs:
-                    newParam = sp.Symbol(parName[:-lenExt])
-                    substDict[param] = newParam
+            if len(parName) > lenExt:
+                if parName[-lenExt:] in instr.pairExt:# and nameParts[-1][:-lenExt] in baseIDs:
+                    substDict[param] = sp.Symbol(parName[:-lenExt])
         result.M = result.M.subs(substDict)
-        # Sources are uncorrelated in the case of noise and dcvar:
         if instr.dataType != 'noise' and instr.dataType != 'dcvar':
             result.Iv = result.Iv.subs(substDict)
     result.Dv = sp.Matrix(dmVars + cmVars)
@@ -1720,12 +1724,6 @@ def pairVariables(instr):
             var = depVars[0]
             if var != 'V_0':
                 paired = False
-                """
-                if instr.dataType == 'noise' and var[0:3] == "I_V":
-                    unPaired.append(var)
-                    depVars.remove(var)
-                else:
-                """
                 if var[-l_sub1:] == sub1:
                     pairedVar = var[0:-l_sub1] + sub2
                     if pairedVar in depVars:

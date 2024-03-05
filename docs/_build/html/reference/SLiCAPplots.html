@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SLiCAPplots.py &mdash; SLiCAP 1.6.0 documentation</title>
+  <title>SLiCAPplots.py &mdash; SLiCAP 1.8.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.8.0
               </div>
             
           
@@ -98,6 +98,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="SLiCAPreference.html">SLiCAP reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPnotebook.html">SLiCAPnotebook.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPlatex.html">SLiCAPlatex.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPkicad.html">SLiCAPkicad.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPrst.html">SLiCAPrst.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAP.html">SLiCAP.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPdesignData.html">SLiCAPdesignData.py</a></li>
@@ -108,6 +109,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SLiCAPplots.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPpythonMaxima.html">SLiCAPpythonMaxima.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPmatrices.html">SLiCAPmatrices.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPngspice.html">SLiCAPngspice.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPprotos.html">SLiCAPprotos.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPmath.html">SLiCAPmath.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPlex.html">SLiCAPlex.py</a></li>
@@ -231,13 +233,13 @@ data from a csv file generated in Cadence.
 <dl class="py function">
 <dt class="sig sig-object py" id="SLiCAP.SLiCAPplots.SLiCAPplots.LTspiceAC2SLiCAPtraces">
 <span class="sig-name descname"><span class="pre">LTspiceAC2SLiCAPtraces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SLiCAP.SLiCAPplots.SLiCAPplots.LTspiceAC2SLiCAPtraces" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function converts the results of a single-run LTspice AC analysis 
+<dd><p>This function converts the results of a single-run LTspice AC analysis
 into two traces (mag, phase) that can be added to SLiCAP plots.
 Stepping is not (yet) supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fileName</strong> (<em>str</em>) – Name of the file. The file should be located in 
+<li><p><strong>fileName</strong> (<em>str</em>) – Name of the file. The file should be located in
 the ditectory given in <em>ini.txtPath</em>.</p></li>
 <li><p><strong>dB</strong> (<em>bool</em>) – True if the trace magnitude should be in dB, else False.
 Default value = False</p></li>
@@ -413,7 +415,7 @@ Defaults to [0, 0, ‘’].</p>
 <span class="sig-name descname"><span class="pre">csv2traces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csvFile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SLiCAP.SLiCAPplots.SLiCAPplots.csv2traces" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a dictionary with traces (key = label, value = trace object) from
 data from a csv file. The CSV file should have the following structure:</p>
-<p>x0_label, y0_label, x1_label, y1_label, … 
+<p>x0_label, y0_label, x1_label, y1_label, …
 x0_0    , y0_0    , x1_0    , y1_0    , …
 x0_1    , y0_1    , x1_1    , y1_1    , …
 …     , …     , …     , …     , …</p>
@@ -642,8 +644,8 @@ corresponds with this scale factor.</p></li>
 <li><p><strong>axisType</strong> (<em>str</em>) – Type of axis: ‘lin’, ‘log’, ‘semilogx’, ‘semilogy’ or ‘polar’.</p></li>
 <li><p><strong>funcType</strong> (<em>str</em>) – Type of function can be: ‘mag’, ‘dBmag’, ‘phase’, ‘delay’,
 ‘time’, ‘onoise’, ‘inoise’ or ‘param’.</p></li>
-<li><p><strong>yVar</strong> (<em>str</em><em>, </em><em>list</em>) – if funcType = param, yVar should be the name of a circuit 
-parameter or list with names of circuit parameters. In other 
+<li><p><strong>yVar</strong> (<em>str</em><em>, </em><em>list</em>) – if funcType = param, yVar should be the name of a circuit
+parameter or list with names of circuit parameters. In other
 cases yVar should be ‘auto’.</p></li>
 <li><p><strong>yScale</strong> (<em>str</em>) – Scale factor of the y axis variable.</p></li>
 <li><p><strong>yUnits</strong> (<em>str</em>) – Units of the y axis variable.</p></li>
@@ -878,7 +880,7 @@ traces must be added. Defaults to [0, 0]</p></li>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2023, SLiCAP development team.
+        &#169; Copyright 2024, SLiCAP development team.
 
     </p>
   </div>

@@ -7,7 +7,10 @@ When working with Jupyter notebooks the main imort module is SLiCAPnotebook.py.
 It will import SLiCAP.py and some extra modules for displaying LaTeX, SVG and
 RST in the Jupyter notebooks.
 """
-from SLiCAP.SLiCAPdesignData import *
+
+from SLiCAP.SLiCAPlatex import *
+from SLiCAP.SLiCAPngspice import MOS, ngspice2traces
+from SLiCAP.SLiCAPkicad import *
 
 try:
     __IPYTHON__
@@ -56,10 +59,10 @@ def initProject(name, port=ini.PORT):
     :param name: Name of the project will be passed to an instance of the
                  SLiCAPproject object.
     :type name: str
-    
+
     :param port: Port number for communication with maxima CAS (> 8000).
     :type port: int
-    
+
     :return:     SLiCAPproject
     :rtype:      SLiCAP.SLiCAPproject
 
@@ -138,23 +141,43 @@ def initProject(name, port=ini.PORT):
         startMaxima()
     else:
         restartMaxima()
+    """
+    if platform.system() == 'Windows':
+        ini.kicadPath = 'C:\\Program Files\\KiCad\\7.0\\bin\\'
+        ini.inkscapePath = 'C:\\Program Files\\Inkscape\\bin\\'
+    elif platform.system() == 'Linux':
+        ini.kicadPath = ''
+        ini.inkscapePath = ''
+    else:
+        ini.kicadPath = '/Applications/KiCad/KiCad.app/Contents/MacOS/'
+        ini.inkscapePath = ''
+    """
     # Create the HTML project index file
     startHTML(name)
-        # Create the libraries
-    if len(SLiCAPCIRCUITS) == 0:
-        makeLibraries()
-    return prj    
+    # Reset parser data
+    CIRCUITNAMES    = []
+    CIRCUITS        = {}
+    SLiCAPLIBS      = ['SLiCAP.lib', 'SLiCAPmodels.lib']
+    SLiCAPMODELS    = {}
+    SLiCAPPARAMS    = {}
+    SLiCAPCIRCUITS  = {}
+    USERLIBS        = []
+    USERMODELS      = {}
+    USERCIRCUITS    = {}
+    USERPARAMS      = {}
+    makeLibraries()
+    return prj
 
 def makeNetlist(fileName, cirTitle):
     """
     Creates a netlist from a schematic file generated with LTspice or gschem.
-    
+
     - LTspice: '.asc' file
     - gschem: '.sch' file
-    
+
     :param fileName: Name of the file, relative to **ini.circuitPath**
     :type fileName: str
-    
+
     :param cirTitle: Title of the schematic.
     :type cirTitle: str
     """
@@ -168,11 +191,11 @@ def makeNetlist(fileName, cirTitle):
         if fileType == 'asc':
             file = os.path.abspath(baseFileName + '.asc')
             print(file)
-            if platform.system() == 'Windows':    
+            if platform.system() == 'Windows':
                 file = file.replace('\\','\\\\')
                 subprocess.run([ini.ltspice, '-netlist', file])
             else:
-                subprocess.run(['wine', ini.ltspice, '-wine', '-netlist', file])
+                subprocess.run(['wine', ini.ltspice, '-wine', '-netlist', file], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
             try:
                 f = open(baseFileName + '.net', 'r')
                 netlistLines = ['"' + cirTitle + '"\n'] + f.readlines()
@@ -186,13 +209,13 @@ def makeNetlist(fileName, cirTitle):
             outputfile = os.path.abspath(baseFileName + '.net')
             inputfile = os.path.abspath(baseFileName + '.sch')
             print('input: ',inputfile, ' output: ', outputfile)
-            if platform.system() != 'Windows':    
+            if platform.system() != 'Windows':
                 try:
                     subprocess.run(['lepton-netlist', '-g', 'spice-noqsi', '-o', outputfile, inputfile])
                 except:
                     print("Could not generate netlist using Lepton-eda")
             try:
-                if platform.system() == 'Windows':    
+                if platform.system() == 'Windows':
                     outputfile = outputfile.replace('\\','\\\\')
                     inputfile = inputfile.replace('\\','\\\\')
                 subprocess.run(['gnetlist', '-q', '-g', 'spice-noqsi', '-o', outputfile, inputfile])
@@ -208,6 +231,30 @@ def makeNetlist(fileName, cirTitle):
             except:
                 print("Error: could not open: '{0}'.".format(baseFileName + '.net'))
     return
+
+def runLTspice(fileName):
+    """
+    Runs LTspice netlist (.cir) file.
+
+    :param fileName: Name of the circuit (.cir) file, relative to the
+                     project directory (cir/<myCircuit>.cir)
+    :type fileName: str
+
+    :return: None
+    :rtype: Nonetype
+    """
+    if not os.path.isfile(fileName):
+        print("Error: could not open: '%s'."%(fileName))
+        return
+    else:
+        fileNameParts = fileName.split('.')
+        fileType = fileNameParts[-1].lower()
+        if fileType == 'cir':
+            if platform.system() == 'Windows':
+                fileName = fileName.replace('\\','\\\\')
+                subprocess.run([ini.ltspice, '-b', fileName])
+            else:
+                subprocess.run(['wine', ini.ltspice, '-b', '-wine', fileName], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 if __name__ == '__main__':
     """

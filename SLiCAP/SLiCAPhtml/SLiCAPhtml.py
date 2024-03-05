@@ -102,7 +102,7 @@ def HTMLfoot(indexFile):
     idx = ini.htmlIndex.split('.')[0]
     html = '\n<div id="footnote">\n'
     html += '<p>Go to <a href="' + ini.htmlIndex + '">' + idx + '</a></p>\n'
-    html += '<p>SLiCAP: Symbolic Linear Circuit Analysis Program, Version 1.5.0 &copy 2009-2023 SLiCAP development team</p>\n'
+    html += '<p>SLiCAP: Symbolic Linear Circuit Analysis Program, Version 1.6.0 &copy 2009-2024 SLiCAP development team</p>\n'
     html += '<p>For documentation, examples, support, updates and courses please visit: <a href="https://analog-electronics.tudelft.nl">analog-electronics.tudelft.nl</a></p>\n'
     html += '<p>Last project update: %s</p>\n'%(ini.lastUpdate.strftime("%Y-%m-%d %H:%M:%S"))
     html += '</div></body></html>'
@@ -637,7 +637,7 @@ def pz2html(instObj, label = '', labelText = ''):
         return html
     elif instObj.dataType != 'poles' and instObj.dataType != 'zeros' and instObj.dataType != 'pz':
         print("Error: 'pz2html()' expected dataType: 'poles', 'zeros', or 'pz', got: '{0}'.".format(instObj.dataType))
-        return html 
+        return html
     elif instObj.step == True :
         print("Error: parameter stepping not implemented for 'pz2html()'.")
         return html
@@ -666,16 +666,18 @@ def pz2html(instObj, label = '', labelText = ''):
             html += '\n<p>DC gain = $' + sp.latex(roundN(DCgain)) + '$</p>\n'
     elif instObj.dataType =='pz':
         html += '<p>DC gain could not be determined.</p>\n'
-    if ini.Hz == True and instObj.numeric == True:
+    if ini.Hz == True:
         unitsM = 'Mag [Hz]'
         unitsR = 'Re [Hz]'
         unitsI = 'Im [Hz]'
+        unitsS = '[Hz]'
     else:
         unitsM = 'Mag [rad/s]'
         unitsR = 'Re [rad/s]'
         unitsI = 'Im [rad/s]'
+        unitsS = '[rad/s]'
     if len(poles) > 0 and instObj.dataType == 'poles' or instObj.dataType == 'pz':
-        if instObj.numeric == True:
+        if checkNumeric(poles):
             html += '<table><tr><th>pole</th><th>' + unitsR + '</th><th>' + unitsI + '</th><th>' + unitsM + '</th><th>Q</th></tr>\n'
             for i in range(len(poles)):
                 p = poles[i]
@@ -698,14 +700,17 @@ def pz2html(instObj, label = '', labelText = ''):
                 html += '<tr><td>' + name + '</td><td>' + Re + '</td><td>' + Im + '</td><td>' + F + '</td><td>' + Q +'</td></tr>\n'
             html += '</table>\n'
         else:
-            html += '<table><tr><th>pole</th><th>value</th></tr>'
+            html += '<table><tr><th>pole</th><th>value ' + unitsS + '</th></tr>'
             for i in range(len(poles)):
-                html += '\n<tr><td> $p_{' +str(i) + '}$</td><td>$' + sp.latex(roundN(poles[i])) + '$</td></tr>\n'
+                p = poles[i]
+                if ini.Hz == True:
+                    p  = p/2/sp.pi
+                html += '\n<tr><td> $p_{' +str(i) + '}$</td><td>$' + sp.latex(roundN(p)) + '$</td></tr>\n'
             html += '</table>\n'
     elif instObj.dataType == 'poles' or instObj.dataType == 'pz':
         html += '<p>No poles found.</p>\n'
     if len(zeros) > 0 and instObj.dataType == 'zeros' or instObj.dataType == 'pz':
-        if instObj.numeric == True:
+        if checkNumeric(zeros):
             html += '<table><tr><th>zero</th><th>' + unitsR + '</th><th>' + unitsI + '</th><th>' + unitsM + '</th><th>Q</th></tr>\n'
             for i in range(len(zeros)):
                 z = zeros[i]
@@ -728,14 +733,35 @@ def pz2html(instObj, label = '', labelText = ''):
                 html += '<tr><td>' + name + '</td><td>' + Re + '</td><td>' + Im + '</td><td>' + F + '</td><td>' + Q +'</td></tr>\n'
             html += '</table>\n'
         else:
-            html += '<table><tr><th>zero</th><th>value</th></tr>'
+            html += '<table><tr><th>zero</th><th>value ' + unitsS + '</th></tr>'
             for i in range(len(zeros)):
-                html += '\n<tr><td> $z_{' +str(i) + '}$</td><td>$' + sp.latex(roundN(zeros[i])) + '$</td></tr>\n'
+                z = zeros[i]
+                if ini.Hz == True:
+                    z = sp.simplify(z/2/sp.pi)
+                html += '\n<tr><td> $z_{' +str(i) + '}$</td><td>$' + sp.latex(roundN(z)) + '$</td></tr>\n'
             html += '</table>\n'
     elif instObj.dataType == 'zeros' or instObj.dataType == 'pz':
         html += '<p>No zeros found.</p>\n'
     insertHTML(ini.htmlPath + ini.htmlPage, html)
     return html
+
+def checkNumeric(exprList):
+    """
+    Returns True if all entries in the list 'exprList' are numeric.
+
+    :param exprList; List with numbers and/or expressions
+    :type exprList: list
+
+    :return: True is all entries in 'exprList' are numeric.
+    :rtype: Bool
+    """
+    numeric = True
+    for item in exprList:
+        params = sp.N(item).atoms(sp.Symbol)
+        if len(params) > 0:
+            numeric = False
+            break
+    return numeric
 
 def noise2html(instObj, label = '', labelText = ''):
     """
@@ -909,7 +935,7 @@ def coeffsTransfer2html(transferCoeffs, label = '', labelText = ''):
 def stepArray2html(stepVars, stepArray):
     """
     Displays the step array on the active HTML page.
-    
+
     :return: html: HTML string that will be placed on the page.
     :rtype: str
     """
@@ -956,7 +982,7 @@ def fig2html(figureObject, width, label = '', caption = ''):
 def file2html(fileName):
     """
     Writes the contents of a file to the active html page.
-    
+
     :param fileName: Name of the file (relative to ini.textPath)
     :type fileName: str
     :return: html code
@@ -990,15 +1016,15 @@ def href(label, fileName = ''):
 def links2html():
     """
     Returns the HTML code for placing links to all labeled HTML objects.
-    
+
     Links will be grouped as follows:
-        
+
     #. Links to headings
     #. Links to circuit data and imported tables
     #. Links to figures
     #. Links to equations
     #. Links to analysis results (from noise2html, pz2html, etc.)
-    
+
     :return: html: HTML string that will be placed on the page.
     :rtype: str
     """
@@ -1038,10 +1064,10 @@ def links2html():
 def htmlLink(address, text):
     """
     Returns the html code for placing a link on an html page with *text2html()*.
-    
+
     :param address: link address
     :type address: str
-    
+
     :return: html code
     :rtype: str
     """
@@ -1056,7 +1082,7 @@ def htmlParValue(instr, parName):
 
     :param instr: Instruction that holds the parameter definition
     :type instr: SLiCAPinstruction.instruction
-    
+
     :param parName: Name of the parameter
     :type parName: string
 
@@ -1073,7 +1099,7 @@ def htmlElValue(instr, elName):
 
     :param instr: Instruction that holds the parameter definition
     :type instr: SLiCAPinstruction.instruction
-    
+
     :param elName: Element identifier
     :type elName: string
 

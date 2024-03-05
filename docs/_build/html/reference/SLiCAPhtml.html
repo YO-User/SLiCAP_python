@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SLiCAPhtml.py &mdash; SLiCAP 1.6.0 documentation</title>
+  <title>SLiCAPhtml.py &mdash; SLiCAP 1.8.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.8.0
               </div>
             
           
@@ -98,6 +98,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="SLiCAPreference.html">SLiCAP reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPnotebook.html">SLiCAPnotebook.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPlatex.html">SLiCAPlatex.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPkicad.html">SLiCAPkicad.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPrst.html">SLiCAPrst.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAP.html">SLiCAP.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPdesignData.html">SLiCAPdesignData.py</a></li>
@@ -108,6 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPplots.html">SLiCAPplots.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPpythonMaxima.html">SLiCAPpythonMaxima.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPmatrices.html">SLiCAPmatrices.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SLiCAPngspice.html">SLiCAPngspice.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPprotos.html">SLiCAPprotos.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPmath.html">SLiCAPmath.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SLiCAPlex.html">SLiCAPlex.py</a></li>
@@ -259,6 +261,22 @@ Used by <strong>SLiCALhtml.links2html()</strong> for sorting the links. Value ca
 ‘headings’, ‘data’, ‘fig’, ‘eqn’ or ‘analysis’.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="SLiCAP.SLiCAPhtml.SLiCAPhtml.checkNumeric">
+<span class="sig-name descname"><span class="pre">checkNumeric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exprList</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SLiCAP.SLiCAPhtml.SLiCAPhtml.checkNumeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if all entries in the list ‘exprList’ are numeric.</p>
+<p>:param exprList; List with numbers and/or expressions
+:type exprList: list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True is all entries in ‘exprList’ are numeric.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -810,7 +828,7 @@ HTML page.</p>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2023, SLiCAP development team.
+        &#169; Copyright 2024, SLiCAP development team.
 
     </p>
   </div>
