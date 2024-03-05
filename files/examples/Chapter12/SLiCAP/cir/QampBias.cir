@@ -1,0 +1,14 @@
+QampBias
+* file: QampBias.cir
+* SLiCAP circuit file
+I1 0 1 0
+R1 1 0 {R_s}
+R2 2 0 {R_ell}
+R3 2 4 {R_B}
+C1 1 2 {C_i}
+C2 2 4 {C_c}
+C3 3 4 {C_B}
+O1 3 1 2 0 OPA627
+O2 0 4 3 0 OPA627
+.param R_s=50k R_ell=2k C_i=5p R_B=1M C_B=100n C_c=0
+.end

@@ -1,0 +1,10 @@
+"CS stage EKV small-signal model"
+* Z:\mnt\DATA\Cursussen\Publish\Books\CSstage\SLiCAP\cir\CSstageEKV.asc
+R1 out 0 {R_L}
+XU1 out N001 0 0 CMOS18N W={W} L={L} ID={ID}
+I1 0 N001 I value=0 dc=0 dcvar=0 noise=0
+R2 N001 0 {R_s}
+.param W=10u L=180n ID=100u R_L=10k R_s=10G
+.include C18.lib
+.backanno
+.end

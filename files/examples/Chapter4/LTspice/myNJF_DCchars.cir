@@ -1,0 +1,14 @@
+DCchars
+* FILE: myNJF_DCchars.cir
+* LTspice circuit file
+VGS 1 0 0
+VDS 2 0 0
+J1 2 1 0 myNJF
+.model myNJF NJF Beta=25m Betatce=-.5 Rd=1 Rs=10 Lambda=40m
++ Vto=-.6 Vtotc=-2m Is=250p Isr=1p N=1 Nr=2 Xti=3 Alpha=-1m
++ Vk=30 Cgd=5p M=.6 Pb=.5 Fc=.5 Cgs=5p Kf=50a Af=1
+* Syntax of nested DC analysis depends on spice version
+*.dc VDS 0 5 10m VGS -0.6 0 0.1
+.dc VGS -0.6 0 10m VDS 1 5 1
+.end
+

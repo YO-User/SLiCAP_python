@@ -1,0 +1,14 @@
+* file: in.cir
+* LTspice subcircuit of a current noise source for noise analysis
+* si: noise current density (noise-floor) in A/sqrt(Hz)
+* fl: 1/f corner frequency
+* Lowest frequency 100uHz
+* For lower frequencies increase C1
+.subckt in 3 4 params: fl=1 si=1p
+I1 0 1 3.125u
+D1 1 0 dnoise
+C1 1 2 1
+V1 2 0 0
+F1 3 4 V1 {si*1e12}
+.model dnoise d kf={3.2e-19*fl} af=1
+.ends in

@@ -1,0 +1,13 @@
+RcmVcmNMOS
+* File: RcmVcmNMOS.cir
+* LTspice circuit file
+.include CMOS18TT.lib
+M1 1 1 0 0 C18nmos W=220n L=1u
+M2 1 2 0 0 C18nmos W=220n L=1u
+M3 2 2 0 0 C18nmos W=220n L=1u
+M4 2 1 0 0 C18nmos W=220n L=1u
+I1 0 1 10u
+I2 0 2 10u
+I3 1 2 0
+.dc I3 -1u 1u 1n
+.end

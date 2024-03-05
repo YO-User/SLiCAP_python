@@ -1,0 +1,10 @@
+* C:\Users\User\OneDrive\Documents\GitHub\SLiCAP_python\files\examples\Chapter5\SLiCAP\cir\tline.asc
+R1 N001 0 {R_L} noisetemp=0 noiseflow=0 dcvar=0
+R3 source 0 {R_S} noisetemp=0 dcvar=0
+I1 0 source I value=0 dc=0 dcvar=0 noise=0
+T1 source 0 N001 0 Td={T1} Z0={Z1}
+.model myNMOS  M gm={g_m} cgs={c_gs} cgb={c_gb} cdg={c_dg} cdb={c_db} go={g_o}
+.param R_S=10G R_L=10k R_f=50 R_b=1.5k Z1=50 T1=10n Z2=50 T2=10n L=1n
+.model myNMOS2  M gm={g_mp} cgs={c_gsp} cgb={c_gbp} cdg={c_dgp} cdb={c_dbp} go={g_op}
+.backanno
+.end

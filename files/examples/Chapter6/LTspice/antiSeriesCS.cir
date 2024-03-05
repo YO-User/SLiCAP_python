@@ -1,0 +1,16 @@
+antiSeriesCS
+* File:  antiSeriesCS.cir
+* LTspice netlist file
+.lib CMOS18TT.lib
+M1 dd G1 ss 0 C18nmos W=220n L=180n
+M2 dd G2 ss 0 C18nmos W=220n L=180n
+V1 c 0 0.9
+V2 dd 0 1.8
+V3 G1 c 0
+E1 c G2 c G1 -1
+I1 ss 0 {Iss}
+.param Iss=100n
+* LTspice specific command section
+.DC V3 -400m 400m 1m
+.step param Iss list 100n 10u 20u 50u 100u
+.end

@@ -1,0 +1,10 @@
+"Voltage amplifier with CCCS controller"
+* file: vAmpBlackF.cir
+* SLiCAP circuit file
+V1 1 0 {V_s}
+R1 1 2 {R_s}
+R2 3 0 {R_ell} 
+F1 0 3 2 4 {A_i}  ;The SLiCAP syntax for a CCCS differs from SPICE syntax
+R3 3 4 {R_a}
+R4 4 0 {R_b}
+.end

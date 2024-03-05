@@ -1,0 +1,44 @@
+DC value of loopgain: -9.73e+5
+
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.60e+1        0.00e+00         1.60e+1
+ 1        -9.64e+4        0.00e+00         9.64e+4
+
+Found no zeros.
+
+R_phz =   3.47e+4 Ohm
+
+DC value of loopgain: -9.73e+5
+
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.60e+1        0.00e+00         1.60e+1
+ 1        -9.32e+4        0.00e+00         9.32e+4
+ 2        -1.36e+6        0.00e+00         1.36e+6
+
+Zeros of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -9.17e+5        0.00e+00         9.17e+5
+
+DC value of gain: -1.00e+5
+
+Poles of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.06e+6        0.00e+00         1.06e+6
+ 1        -1.97e+5        -1.35e+6         1.36e+6   3.46e+0
+ 2        -1.97e+5         1.35e+6         1.36e+6   3.46e+0
+
+Zeros of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        2.91e+10        0.00e+00        2.91e+10

@@ -1,9 +1,9 @@
-"CS stage MOS small-signal model"
 * C:\Users\User\Documents\GitHub\SLiCAP_python\files\examples\Chapter5\SLiCAP\cir\CSstageModel3.asc
 R1 out 0 {R_L} noisetemp=0 noiseflow=0 dcvar=0
-M1 out N001 0 0 myNMOS
+M1 out N002 0 0 myNMOS
 V1 N001 0 V value=0 dc=0 dcvar=0 noise=0
+R3 N002 N001 {R_S} noisetemp=0 dcvar=0
 .model myNMOS  M gm={g_m} cgs={c_gs} cgb={c_gb} cdg={c_dg} cdb={c_db} go={g_o}
-.param R_s=10G R_L=10k
+.param R_s=50 R_L=10k
 .backanno
 .end

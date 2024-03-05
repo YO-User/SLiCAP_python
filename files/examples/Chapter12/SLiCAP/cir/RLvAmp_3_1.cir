@@ -1,0 +1,16 @@
+"Root Locus 3nd order voltage amplifier, one zero"
+* File: RLvAmp-3_1.cir
+* SLiCAP netlist file
+V1 1 0 {V_s}
+R1 1 2 {R_s}
+E1 3 0 2 4 {A_0/(1-s/p_1)/(1-s/p_2)/(1-s/p_3)}
+E2 4 0 3 0 {A*(1-s/z_1)}
+R2 3 0 {R_ell}
+* For pole-zero analysis all parameters must have a numeric value
+.param A_0 = 12k A = 10m
++ p_1 = {-2*pi*10} 
++ p_2 = {-2*pi*590} 
++ p_3 = {-2*pi*1400} 
++ z_1 = {-2*pi*866.48}
++ R_ell = 1 R_s=1 V_s=1
+.end

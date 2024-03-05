@@ -1,0 +1,11 @@
+* FILE: gummelPlot.cir
+* LTspice circuit file
+VBE b 0 0
+VCB c b 0
+Q1 c b 0 myNPN
+.model myNPN NPN
++ IS=0.5f BF=100 NF=1 IKF=100m ISE=10f NE=2 RB=10
+.options gmin=1f
+.dc VBE 0 1 10m
+.end
+

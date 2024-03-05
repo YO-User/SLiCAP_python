@@ -1,0 +1,15 @@
+transimpedanceCompensated
+* file: transimpedanceCompensated.cir
+* SLiCAP circuit file
+I1 0 1 0
+C1 1 0 {C_s}
+C2 1 0 {C_d}
+C3 1 0 {C_c/2}
+C4 1 2 {C_phz}
+C5 2 0 {C_ell}
+R1 1 2 {R_f}
+R2 2 0 {R_ell}
+E1 2 0 0 1 EZ value={A_0/(1+s/2/pi/16)} zo={R_o}
+.param C_d=8p C_c=7p A_0=1M R_o=55 G_B=16M 
+.param C_s=5p R_f=100k R_ell=2k C_ell=0 C_phz=0
+.end

@@ -1,0 +1,8 @@
+CDcompM18
+XU1 0 2 out 0 CMOS18N W={W} L={L} ID={ID}
+V1 1 0 V value=0 dc=0 dcvar=0 noise=0
+R1 2 1 {R_s}
+C1 out 0 {C_ell}
+C2 2 0 {C_phz}
+.lib C18.lib
+.end

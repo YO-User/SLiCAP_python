@@ -1,0 +1,40 @@
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.06e+1        0.00e+00         1.06e+1
+ 1        -6.67e+1        0.00e+00         6.67e+1
+ 2        -7.96e+2        0.00e+00         7.96e+2
+ 3        -1.20e+8        0.00e+00         1.20e+8
+
+Zeros of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.06e+1        0.00e+00         1.06e+1
+ 1         1.20e+8        0.00e+00         1.20e+8
+
+DC value of loopgain: -3.00e+5
+
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -6.67e+1        0.00e+00         6.67e+1
+ 1        -7.96e+2        0.00e+00         7.96e+2
+ 2        -1.20e+8        0.00e+00         1.20e+8
+
+Zeros of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0         1.20e+8        0.00e+00         1.20e+8
+
+Poles of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.06e+1        0.00e+00         1.06e+1
+ 1        -2.99e+2        -1.26e+5         1.26e+5   2.11e+2
+ 2        -2.99e+2         1.26e+5         1.26e+5   2.11e+2
+ 3        -1.20e+8        0.00e+00         1.20e+8

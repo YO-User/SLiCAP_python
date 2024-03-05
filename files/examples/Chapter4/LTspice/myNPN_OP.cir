@@ -1,0 +1,19 @@
+* FILE: myNPN_OP.cir
+* SPICE circuit file
+*
+* Transistor with VCE and IC definition
+Q1 1 2 0 myNPN
+VCE 1 3 {V_CE}
+IC 0 3 {I_C}
+*
+* nullor
+E1 4 0 3 0 1
+E2 2 0 2 4 1
+*
+.model myNPN NPN
++ IS=0.5f BF=100 NF=1 IKF=100m ISE=10f NE=2 RB=10
++ TF=1n CJE=5p CJC=1p VJE=0.6 VJC=0.8 XTF=1 VTF=2 ITF=20m
+*
+.param V_CE=3 I_C=1m
+.op
+.end

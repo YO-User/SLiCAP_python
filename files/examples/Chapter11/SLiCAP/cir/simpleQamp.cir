@@ -1,0 +1,11 @@
+simpleQamp
+* file: simpleQamp.cir
+* SLiCAP circuit file
+I1 0 1 {I_s}
+R1 1 0 {R_s}
+C1 1 2 {C_i}
+R2 2 0 {R_ell}
+E1 2 0 0 1 {A_0}
+.param C_i=5p R_s=50k R_ell=2k
+.end
+

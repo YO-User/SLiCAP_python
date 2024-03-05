@@ -1,0 +1,14 @@
+* file: vn.cir
+* LTspice subcircuit of a voltage noise source for noise analysis
+* sv: noise voltage density (noise-floor) in V/sqrt(Hz)
+* fl: 1/f corner frequency
+* Lowest frequency 100uHz
+* For lower frequencies increase C1
+.subckt vn 3 4 params: fl=1 sv=1n
+I1 0 1 3.125u
+D1 1 0 dnoise
+C1 1 2 1
+V1 2 0 0
+H1 3 4 V1 {sv*1e12}
+.model dnoise d kf={3.2e-19*fl} af=1
+.ends vn

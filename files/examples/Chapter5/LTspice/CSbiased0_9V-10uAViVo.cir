@@ -1,0 +1,12 @@
+CSbiased0_9V-10uAViIo
+* file: CSbiased0_9V-10uAViIo
+* Spice circuit file
+.include CMOS18TT.lib
+M1 2 1 0 0 C18nmos W=220n L=180n
+VdsQ 2 3 0.9
+IdsQ 0 3 10u
+VgsQ 1 4 643.709m
+Vi   4 0 0
+.dc Vi -0.05 0.05 1m
+.end
+.graph "3"

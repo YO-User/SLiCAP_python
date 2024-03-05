@@ -1,0 +1,12 @@
+* C:\Users\User\Documents\GitHub\SLiCAP_python\files\examples\Chapter5\SLiCAP\cir\CSstageModel5.asc
+R1 out 0 {R_L} noisetemp=0 noiseflow=0 dcvar=0
+M1 out source 0 0 myNMOS
+R3 source 0 {R_S} noisetemp=0 dcvar=0
+M2 out source 0 0 myPMOS
+R2 out source {R_f} noisetemp=0 dcvar=0
+I1 0 out I value=0 dc=0 dcvar=0 noise=0
+.model myNMOS  M gm={g_m} cgs={c_gs} cgb={c_gb} cdg={c_dg} cdb={c_db} go={g_o}
+.param R_S=50 R_L=10k R_f=50
+.model myPMOS  M gm={g_mp} cgs={c_gsp} cgb={c_gbp} cdg={c_dgp} cdb={c_dbp} go={g_op}
+.backanno
+.end

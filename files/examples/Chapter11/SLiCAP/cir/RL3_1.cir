@@ -1,0 +1,6 @@
+RL3_1
+* file: RL3_1.cir
+V1 1 0 0
+E1 2 0 1 2 {A_0*(1+s/150/pi)/(20k*pi^2 + 200*pi*s + s^2)/s}
+.param A_0 = 2.5e8
+.end

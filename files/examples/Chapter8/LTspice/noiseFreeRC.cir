@@ -1,0 +1,11 @@
+* file: noiseFreeRC.cir
+* LTspice subcircuit for a parallel connection of a noise-free resistor
+* and a capacitor
+* P: positive node
+* N: negative node
+* R: resistance
+* C: capacitance
+.subckt noisefreerc P N params: R=1 C=1
+V1 1 N 0
+H1 P 1 V1 laplace = {R/1+s*R*C}
+.ends noisefreerc

@@ -1,0 +1,9 @@
+"PhZ bandwidth limitation"
+* Z:\mnt\DATA\www\analog-electronics.eu\topics\FrequencyCompensation\SLiCAP_python\cir\PhZbwLimit.asc
+I1 0 N001 I value=0 dc=0 dcvar=0 noise=0
+R2 out N001 {R_f}
+C1 out N001 {C_f}
+E1 out 0 N001 0 {A/(s*(1+s*tau_2))}
+C2 N001 0 {C_s}
+.backanno
+.end

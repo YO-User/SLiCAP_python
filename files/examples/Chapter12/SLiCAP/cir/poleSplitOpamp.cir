@@ -1,0 +1,10 @@
+"Pole splitting with opamps"
+* file: poleSplitOpamp.cir
+* SLiCAP netlist file
+V1 1 0 0
+R1 1 2 {R_a}
+C1 2 0 {C_a}
+E1 0 3 2 0 {A_0/(1+s*tau)}
+C2 2 3 {C_c}
+.param C_c=0
+.end

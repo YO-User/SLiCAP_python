@@ -1,0 +1,25 @@
+CS-resNoise
+* file: CS-resNoise.cir
+* LTspice circuit file
+.lib CMOS18-1.lib
+C1 1 0 1
+E1 2 0 1 0 1k
+V1 3 2 0
+R1 3 4 600
+M1 5 4 0 0 C18nmos L=180n W={W}
+V2 5 6 0.9
+R2 6 1 1meg
+I1 0 6 {W*6.15m/54.6u}
+.param W=54.6u
+* instruction for plotting source referred noise spectrum
+* over a frequency range from 100MHz to 100GHZ
+;.noise V(6) V1 DEC 25 0.1G 100G
+
+* instruction for plotting the noise figure as a function of the width
+.noise V(6) V1 lin 100 1G 5G
+.step param W 10u 100u 1u
+.meas NOISE totOnoise integ V(onoise) FROM 1G TO 5G
+.meas NOISE totR1noise integ V(R1) FROM 1G to 5G
+.meas NOISE noiseFig PARAM 20*log10(totOnoise/totR1noise)
+.end
+

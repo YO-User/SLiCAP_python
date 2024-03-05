@@ -1,0 +1,31 @@
+complParlCS
+* File: complParlCS.cir
+* LTspice netlist file
+.lib CMOS18TT.lib
+* Circuit for determination of VgsP
+M1 1 VgsP 0 0 C18pmos L=180n W=770n
+E1 VgsP 0 2 0 1meg
+V1 2 1 {VP}
+I1 2 0 {IQ}
+* Circuit for determination of VgsN
+M2 3 VgsN 0 0 C18nmos L=180n W=220n
+V2 3 4 {VN}
+I2 0 4 {IQ}
+E2 VgsN 0 4 0 1meg
+* Biased complementary parallel stage
+V5 5  0  {VP}
+V6 0  6  {VN}
+V7 in 0  DC 0
+V3 9  in {VP}
+V4 in 10 {VN}
+E3 9  7  0    VgsP 1
+E4 8  10 VgsN 0    1
+M3 0 7 5 5 C18pmos L=180n W=770n
+M4 0 8 6 6 C18nmos L=180n W=220n
+.param VP=0.9 VN=0.9 IQ=1u
+*
+* LTspice command section
+*
+.DC V7 -900m 900m 36m
+.step param IQ list 10n 100n 200n 500n 1u 2u 5u 10u
+.end

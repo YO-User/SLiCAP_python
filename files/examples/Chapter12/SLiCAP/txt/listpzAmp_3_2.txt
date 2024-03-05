@@ -1,0 +1,13 @@
+DC value of gain:  1.25e+3
+
+Poles of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -4.99e+2        -8.66e+2         9.99e+2   1.00e+0
+ 1        -4.99e+2         8.66e+2         9.99e+2   1.00e+0
+ 2        -1.00e+3        0.00e+00         1.00e+3
+
+Found no zeros.
+
+Loop gain: phase margin = 47.98deg at f = 1.13e+03Hz

@@ -1,0 +1,9 @@
+"CS stage noise"
+* Z:\mnt\DATA\Cursussen\Publish\Books\CSstage\SLiCAP\cir\N18noise.asc
+XU1 N001 0 out NM18_noise ID={ID} IG=0 W={W} L={L}
+V1 N001 0 V value=0 dc=0 dcvar=0 noise=0
+.param W=220n L={W} ID=1u
+.include C18.lib
+.lib SLiCAP.lib
+.backanno
+.end

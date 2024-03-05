@@ -1,0 +1,15 @@
+MCexample
+
+* file: MCexample.cir
+* Example of a Monte Carlo simulation in LTspice
+* vgauss :Voltage source with Gaussian distribution
+* positive node = 1, negative node = 0
+* vmean  :Mean value
+* vsigma :Standard deviation
+
+.params vmean=0 vsigma=10m
+vgauss 1 0 {vmean + gauss(vsigma)}
+.op
+.step param run 1 200 1 ;200 Monte Carlo runs
+.save V(1)
+.end

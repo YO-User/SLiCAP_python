@@ -1,0 +1,13 @@
+" Root Locus 2nd order voltage follower"
+* File: RLvFollower-2.cir
+* SLiCAP netlist file
+V1 1 0 {V_s}
+R1 1 2 {R_s}
+E1 3 0 2 3 {A_0/(1-s/p_1)/(1-s/p_2)}
+R2 3 0 {R_ell}
+* For pole-zero analysis all parameters must have a numeric value
+.param A_0=1M 
++ p_1={-2*pi/sqrt(2)} 
++ p_2={-2*pi*1M*sqrt(2)} 
++ R_ell=1 R_s=1 V_s=1
+.end

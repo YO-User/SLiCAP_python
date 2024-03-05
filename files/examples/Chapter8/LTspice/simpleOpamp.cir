@@ -1,0 +1,12 @@
+* file: simpleOpamp.cir
+* LTspice subcircuit for simple a 3-terminal OpAmp
+* A voltage controlled voltage source models A_v(s)
+* of a single-pole operational amplifier with
+* a DC gain A_0=1Meg and a gain-bandwidth product GB=10MHz
+* noninverting input: inP
+* inverting input:    inN
+* output:             out
+* reference node:     0
+.subckt simpleopamp inP inN out params: A_0=1meg GB=10meg
+E1 out 0 inP inN laplace = {A_0/(1+s*A_0/2/pi/GB)}
+.ends  simpleopamp

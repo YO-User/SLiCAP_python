@@ -1,0 +1,18 @@
+* C:\Users\User\OneDrive\Documents\GitHub\SLiCAP_python\files\examples\Chapter5\SLiCAP\cir\halfswitch.asc
+R1 N003 0 {R_L} noisetemp=0 noiseflow=0 dcvar=0
+M1 out N001 N002 N004 myNMOS
+R3 source 0 {R_S} noisetemp=0 dcvar=0
+I1 0 source I value=0 dc=0 dcvar=0 noise=0
+L1 out N002 {L}
+T1 source 0 N002 0 Td={T1} Z0={Z1}
+R2 N004 0 {R_b}
+R4 v1a N001 {R_b}
+M2 N003 N005 0 N006 myNMOS2
+R5 N006 0 {R_b}
+R6 N005 v1b {R_b}
+T2 out 0 N003 0 Td={T2} Z0={Z2}
+.model myNMOS  M gm={g_m} cgs={c_gs} cgb={c_gb} cdg={c_dg} cdb={c_db} go={g_o}
+.param R_S=10G R_L=10k R_f=50 R_b=1.5k Z1=50 T1=10n Z2=50 T2=10n L=1n
+.model myNMOS2  M gm={g_mp} cgs={c_gsp} cgb={c_gbp} cdg={c_dgp} cdb={c_dbp} go={g_op}
+.backanno
+.end

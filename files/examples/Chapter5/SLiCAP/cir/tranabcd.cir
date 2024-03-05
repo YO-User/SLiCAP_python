@@ -1,0 +1,11 @@
+* C:\Users\User\OneDrive\Documents\GitHub\SLiCAP_python\files\examples\Chapter5\SLiCAP\cir\tranabcd.asc
+R1 vout 0 {R_L} noisetemp=0 noiseflow=0 dcvar=0
+R3 source N001 {R_S} noisetemp=0 dcvar=0
+XU1 vout 0 source 0 ABCD
+V1 N001 0 V value=0 dc=0 dcvar=0 noise=0
+L1 vout 0 {L} iinit=0
+.model myNMOS  M gm={g_m} cgs={c_gs} cgb={c_gb} cdg={c_dg} cdb={c_db} go={g_o}
+.param R_S=50 R_L=50 R_f=50 R_b=1.5k Z1=50 T1=10n Z2=50 T2=10n L=1n R7_comp=50 R8_comp=50 A_T=10 B_T=10 C_T=10 D_T=10
+.model myNMOS2  M gm={g_mp} cgs={c_gsp} cgb={c_gbp} cdg={c_dgp} cdb={c_dbp} go={g_op}
+.backanno
+.end

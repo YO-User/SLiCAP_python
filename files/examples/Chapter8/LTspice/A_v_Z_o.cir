@@ -1,0 +1,23 @@
+A_v_Z_o
+* file: A_v_Z_o.cir
+* LTSpice netlist file
+* Test bench for A_v and Z_o of a
+* voltage-feedback operational amplifier
+* Default settings:
+*** measurement of A_v
+*** +/-5V supply voltage
+*** LT1677 operational amplifier
+.param vs=1         ;change to vs=0 for measurement of Z_o
+.param io=0         ;change to io=1 for measurement of Z_o
+V1 0 1 0 AC {vs} 0
+I2 0 3 0 AC {io} 0
+I1 0 2 0            ;Adjust this value for zero DC output voltage
+VP 4 0 5            ;Positive supply voltage
+VN 0 5 5            ;Negative supply voltage
+C1 2 0 1meg         ;Adjust this value if necessary
+R1 3 2 1meg         ;Adjust this value if necessary
+X1 1 2 4 5 3 LT1677 ;Device Under Test (DUT)
+.include LTC.lib    ;Library file with the subcircuit of DUT
+.ac dec 20 1 10meg  ;AC sweep over frequency range of interest 20 points/decade
+.save v(3)          ;Save the output voltage
+.end

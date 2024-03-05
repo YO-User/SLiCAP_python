@@ -1,0 +1,12 @@
+DCchars
+* FILE: myNPN_DCchars.cir
+* LTspice circuit file
+VBE 1 0 0
+VCE 2 0 0
+Q1 2 1 0 myNPN
+.model myNPN NPN
++ IS=0.5f BF=100 NF=1 IKF=100m ISE=10f NE=2 RB=10 VAF=20
++ TF=1n CJE=5p CJC=1p VJE=0.6 VJC=0.8 XTF=1 VTF=2 ITF=20m
+.dc VCE 0 5 10m VBE 0.6 0.65 10m
+* .dc VBE 0 0.65 10m VCE 1 5 1
+.end

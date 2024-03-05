@@ -1,0 +1,10 @@
+"CDcompM18bulk"
+* Z:\mnt\DATA\Cursussen\SLiCAP_LTspice_book\Chapter13\SLiCAP\cir\CDcompM18bulk.asc
+XU1 0 N002 out out CMOS18N W={W} L={L} ID={ID}
+V1 N001 0 V value=0 dc=0 dcvar=0 noise=0
+R1 N002 N001 {R_s}
+C1 out 0 {C_ell}
+C2 N002 0 {C_phz}
+.lib C18.lib
+.backanno
+.end

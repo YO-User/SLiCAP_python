@@ -1,0 +1,85 @@
+<a id=""></a><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<meta name="Language" content="English"/>
+<title>"Circuit data"</title><link rel="stylesheet" href="css/slicap.css">
+<script>MathJax = {tex:{tags: 'ams', inlineMath:[['$','$'],]}, svg:{fontCache:'global'}};</script>
+<script type="text/javascript" id="MathJax-script" async  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head><body><div id="top"><h1>Circuit data</h1></div>
+<h2>Circuit diagram</h2>
+<figure><img src="img/CSstageModel.svg" alt="" style="width:600px">
+</figure>
+<h2>Netlist: CSstageModel.cir</h2>
+<pre>"CS stage MOS small-signal model"
+* Z:\mnt\DATA\Cursussen\Publish\Books\CSstage\SLiCAP\cir\CSstageModel.asc
+R1 out 0 {R_L}
+I1 0 N001 I value=0 dc=0 dcvar=0 noise=0
+R2 N001 0 {R_s}
+M1 out N001 0 0 myNMOS
+.model myNMOS  M gm={g_m} cgs={c_gs} cgb={c_gb} cdg={c_dg} cdb={c_db} go={g_o}
+.param R_s=10G R_L=10k
+.backanno
+.end
+</pre>
+<table><caption>Table: Element data of expanded netlist 'CS stage MOS small-signal model'</caption>
+<tr><th class="left">RefDes</th><th class="left">Nodes</th><th class="left">Refs</th><th class="left">Model</th><th class="left">Param</th><th class="left">Symbolic</th><th class="left">Numeric</th></tr>
+<tr><td class="left">Cdb_M1</td><td class = "left">out 0 </td><td class = "left"></td><td class = "left">C</td>
+<td class="left">value</td><td class="left">$c_{db}$</td><td class="left">$c_{db}$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">vinit</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">Cdg_M1</td><td class = "left">out N001 </td><td class = "left"></td><td class = "left">C</td>
+<td class="left">value</td><td class="left">$c_{dg}$</td><td class="left">$c_{dg}$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">vinit</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">Cgb_M1</td><td class = "left">N001 0 </td><td class = "left"></td><td class = "left">C</td>
+<td class="left">value</td><td class="left">$c_{gb}$</td><td class="left">$c_{gb}$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">vinit</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">Cgs_M1</td><td class = "left">N001 0 </td><td class = "left"></td><td class = "left">C</td>
+<td class="left">value</td><td class="left">$c_{gs}$</td><td class="left">$c_{gs}$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">vinit</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">Csb_M1</td><td class = "left">0 0 </td><td class = "left"></td><td class = "left">C</td>
+<td class="left">value</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">vinit</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">Gb_M1</td><td class = "left">out 0 0 0 </td><td class = "left"></td><td class = "left">g</td>
+<td class="left">value</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">Gm_M1</td><td class = "left">out 0 N001 0 </td><td class = "left"></td><td class = "left">g</td>
+<td class="left">value</td><td class="left">$g_{m}$</td><td class="left">$g_{m}$</td></tr>
+<tr><td class="left">Go_M1</td><td class = "left">out 0 out 0 </td><td class = "left"></td><td class = "left">g</td>
+<td class="left">value</td><td class="left">$g_{o}$</td><td class="left">$g_{o}$</td></tr>
+<tr><td class="left">I1</td><td class = "left">0 N001 </td><td class = "left"></td><td class = "left">I</td>
+<td class="left">value</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">dc</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">dcvar</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">noise</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">R1</td><td class = "left">out 0 </td><td class = "left"></td><td class = "left">R</td>
+<td class="left">value</td><td class="left">$R_{L}$</td><td class="left">$1.0 \cdot 10^{4}$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">dcvar</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">noisetemp</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">noiseflow</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td class="left">R2</td><td class = "left">N001 0 </td><td class = "left"></td><td class = "left">R</td>
+<td class="left">value</td><td class="left">$R_{s}$</td><td class="left">$1.0 \cdot 10^{10}$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">dcvar</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">noisetemp</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+<tr><td></td><td></td><td></td><td></td><td class="left">noiseflow</td><td class="left">$0$</td><td class="left">$0$</td></tr>
+</table>
+<table><caption>Table: Parameter definitions in 'CS stage MOS small-signal model'.</caption>
+<tr><th class="left">Name</th><th class="left">Symbolic</th><th class="left">Numeric</th></tr>
+<tr><td class="left">$R_{L}$</td><td class="left">$1.0 \cdot 10^{4}$</td><td class="left">$1.0 \cdot 10^{4}$</td></tr>
+<tr><td class="left">$R_{s}$</td><td class="left">$1.0 \cdot 10^{10}$</td><td class="left">$1.0 \cdot 10^{10}$</td></tr>
+</table>
+<table><caption>Table: Parameters without definition in 'CS stage MOS small-signal model.</caption>
+
+<tr><th class="left">Name</th></tr>
+<tr><td class="left">$c_{db}$</td></tr>
+<tr><td class="left">$g_{o}$</td></tr>
+<tr><td class="left">$c_{gb}$</td></tr>
+<tr><td class="left">$c_{dg}$</td></tr>
+<tr><td class="left">$g_{m}$</td></tr>
+<tr><td class="left">$c_{gs}$</td></tr>
+</table>
+<!-- INSERT -->
+<div id="footnote">
+<p>Go to <a href="CS-stage-MOS-small-signal-model_index.html">CS-stage-MOS-small-signal-model_index</a></p>
+<p>SLiCAP: Symbolic Linear Circuit Analysis Program, Version 1.5.0 &copy 2009-2022 SLiCAP development team</p>
+<p>For documentation, examples, support, updates and courses please visit: <a href="https://analog-electronics.tudelft.nl">analog-electronics.tudelft.nl</a></p>
+<p>Last project update: 2024-02-01 08:10:54</p>
+</div></body></html>

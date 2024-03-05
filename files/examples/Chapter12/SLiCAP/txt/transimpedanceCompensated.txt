@@ -1,0 +1,105 @@
+DC value of loopgain: -9.73e+5
+
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.60e+1        0.00e+00         1.60e+1
+ 1        -9.64e+4        0.00e+00         9.64e+4
+
+Found no zeros.
+
+C_phz =  1.73e-12F
+
+DC value of loopgain: -9.73e+5
+
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.60e+1        0.00e+00         1.60e+1
+ 1        -8.72e+4        0.00e+00         8.72e+4
+ 2        -1.89e+9        0.00e+00         1.89e+9
+
+Zeros of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -9.17e+5        0.00e+00         9.17e+5
+
+DC value of gain: -1.00e+5
+
+Poles of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -7.84e+5        -8.63e+5         1.17e+6   7.43e-1
+ 1        -7.84e+5         8.63e+5         1.17e+6   7.43e-1
+ 2        -1.89e+9        0.00e+00         1.89e+9
+
+Zeros of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0         1.63e+8        0.00e+00         1.63e+8
+ 1        -1.64e+8        0.00e+00         1.64e+8
+
+=== Bandwidth limitation to 200kHz ===
+DC value of asymptotic: -1.00e+5
+
+Poles of asymptotic:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -2.00e+5        0.00e+00         2.00e+5
+
+Found no zeros.
+
+DC value of loopgain: -9.73e+5
+
+Poles of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -1.60e+1        0.00e+00         1.60e+1
+ 1        -6.51e+4        0.00e+00         6.51e+4
+ 2        -5.54e+8        0.00e+00         5.54e+8
+
+Zeros of loopgain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -2.00e+5        0.00e+00         2.00e+5
+
+DC value of servo:  1.00e+0
+
+Poles of servo:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -2.06e+5        0.00e+00         2.06e+5
+ 1        -4.97e+6        0.00e+00         4.97e+6
+ 2        -5.49e+8        0.00e+00         5.49e+8
+
+Zeros of servo:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -2.00e+5        0.00e+00         2.00e+5
+
+DC value of gain: -1.00e+5
+
+Poles of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -2.06e+5        0.00e+00         2.06e+5
+ 1        -4.97e+6        0.00e+00         4.97e+6
+ 2        -5.49e+8        0.00e+00         5.49e+8
+
+Zeros of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0         7.62e+7        0.00e+00         7.62e+7
+ 1        -7.64e+7        0.00e+00         7.64e+7

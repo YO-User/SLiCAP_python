@@ -1,0 +1,9 @@
+NA_7
+* file: NA_7.cir
+* SLiCAP netlist for nodal analysis
+V1 1 0 {V_A}
+R1 1 2 {R_1}
+R2 2 3 {R_2}
+R3 2 0 {R_3}
+V2 3 0 {V_B}
+.end

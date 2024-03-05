@@ -1,0 +1,75 @@
+*******************************************************************************
+* Sub circuit nullor
+* Nodes:       out+ out- in+ in-
+.subckt nullor 3    4    1   2
+E1 3 4 3 5 1
+E2 5 4 1 2 1
+.ends nullor
+*******************************************************************************
+* Sub circuit nNoise
+* LTspice subcircuit for a noisy nullor for noise analysis
+* Lowest frequency 100uHz
+* For lower frequencies increase C1 and C2
+* Nodes:       in+ in- out+ out- 
+.subckt nNoise inP inN outP outN params: Sv=1n Si=1p flv=1k fli=10k
+* Parameters:
+* Sv:  input noise voltage density (noise-floor) in V/sqrt(Hz)
+* flv: 1/f corner frequency of voltage noise
+* Si:  input noise current density (noise-floor) in A/sqrt(Hz)
+* fli: 1/f corner frequency of current noise
+E1 outP 6 inP 5 1
+E2 outP outN 6 outN 1
+D1 1 3 DnoiseV
+D2 3 outN DnoiseI
+I1 outN 1 3.125u
+C1 1 2 1
+C2 3 4 1
+Vi 2 3 0
+Vv 4 outN 0
+F1 inP inN Vi {Si*1e12}
+H1 inN 5 Vv {Sv*1e12}
+.model DnoiseV D kf={3.2e-19*flv} af=1
+.model DnoiseI D kf={3.2e-19*fli} af=1
+.ends nNoise
+*******************************************************************************
+* Sub circuit In
+* Spice subcircuit of a current noise source for noise analysis
+* Si: noise current density (noise-floor) in A/sqrt(Hz)
+* fl: 1/f corner frequency
+* Lowest frequency 100uHz
+* For lower frequencies increase C1
+.subckt In 3 4 params: fl=1 Si=1p
+I1 0 1 3.125u
+D1 1 0 dnoise
+C1 1 2 1
+V1 2 0 0
+F1 3 4 V1 {Si*1e12}
+.model dnoise d kf={3.2e-19*fl} af=1
+.ends In
+*******************************************************************************
+* Sub circuit Vn
+* LTspice subcircuit of a voltage noise source for noise analysis
+* Sv: noise voltage density (noise-floor) in V/sqrt(Hz)
+* fl: 1/f corner frequency
+* Lowest frequency 100uHz
+* For lower frequencies increase C1
+.subckt vn 3 4 params: fl=1 Sv=1n
+I1 0 1 3.125u
+D1 1 0 dnoise
+C1 1 2 1
+V1 2 0 0
+H1 3 4 V1 {Sv*1e12}
+.model dnoise d kf={3.2e-19*fl} af=1
+.ends Vn
+********************************************************************************
+* LTspice subcircuit for simple a 3-terminal OpAmp
+* A voltage controlled voltage source models A_v(s)
+* of a single-pole operational amplifier with
+* a DC gain A_0=1Meg and a gain-bandwidth product GB=10MHz
+* noninverting input: inP
+* inverting input:    inN
+* output:             out
+* reference node:     0
+.subckt simpleopamp inP inN out params: A_0=1meg GB=10meg
+E1 out 0 inP inN laplace = {A_0/(1+s*A_0/2/pi/GB)}
+.ends  simpleopamp

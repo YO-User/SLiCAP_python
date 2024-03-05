@@ -1,0 +1,11 @@
+CSbiased0_9V-10uAViVoPulse
+* file: CSbiased0_9V-10uAViVoPulse
+* Spice circuit file
+.include CMOS18TT.lib
+M1 2 1 0 0 C18nmos W=220n L=180n
+VdsQ 2 3 0.9
+IdsQ 0 3 10u
+VgsQ 1 4 0.643.709
+Vi   4 0 0 pulse(-100m 100m 20p 2p 2p 98p 200p)
+.tran 0 200p 0 0.2p
+.end

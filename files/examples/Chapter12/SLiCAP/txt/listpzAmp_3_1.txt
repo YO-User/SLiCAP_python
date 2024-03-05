@@ -1,0 +1,11 @@
+Poles of gain:
+
+ n  Real part [Hz]  Imag part [Hz]  Frequency [Hz]     Q [-] 
+--  --------------  --------------  --------------  --------
+ 0        -4.95e+2        -8.63e+2         9.95e+2   1.00e+0
+ 1        -4.95e+2         8.63e+2         9.95e+2   1.00e+0
+ 2        -1.01e+3        0.00e+00         1.01e+3
+
+Found no zeros.
+
+Loop gain: phase margin = 49.24deg at f = 8.29e+02Hz

@@ -1,0 +1,37 @@
+YparHyPiPar.cir
+*LTspice netlist
+
+*Circuit for determination of Vgs
+M1 d1 Vgs 0 0 C18nmos L={L} W={W}
+V1 d1 o1 {Vds}
+I1 0  o1 {Ids}
+E1 Vgs 0 o1 0 1k
+
+*Circuit for determination of Y11 and Y12
+M2 d2 g2 0 0 C18nmos L={L} W={W}
+V2 d2 0 {Vds}
+V3 g2 i2 AC 1 0
+E2 i2 0 Vgs 0 1
+
+*Circuit for determination of Y21 and Y22
+M3 d3 g3 0 0 C18nmos L={L} W={W}
+V4 d3 0 {Vds} AC 1 0
+E3 g3 0 Vgs 0 1
+
+.lib CMOS18TT.lib
+
+.AC LIN 3 9.5Meg 10.5Meg
+
+* Device parameters
+.param W=220n L=180n
+
+* Operating point
+.param Vds=0.9 Ids=10u
+
+* LTspice specific instructions for printing the small-signal parameters (at f=10MHz) in dB:
+.meas AC g_m FIND Re(-I(V2)) AT 10MEG
+.meas AC g_o FIND Re(-I(V4)) AT 10MEG
+.meas AC c_iss FIND Im(-I(V3))/(2*pi*10meg) AT 10MEG
+.meas AC c_oss FIND Im(-I(V4))/(2*pi*10meg) AT 10MEG
+.meas AC c_dg FIND Im(I(E3))/(2*pi*10meg) AT 10MEG
+
